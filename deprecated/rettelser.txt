@@ -1,0 +1,20 @@
+
+- fandt ud af hvorfor der forsvandt et fund da Christian oprettede fund : Når man klikkede "Nyt fund" 
+blev event_id'et nulstillet (ligger som skjult input-felt), det blev oprettet - bare på 
+event_id 0. Det er rettet.
+
+- "indtaster" sættes nu automatisk til brugerlogin.
+
+- indtastning, der er nu en checkbox, "endeligt bestemt", der er krydset af som standard. Hvis man af-krydser den, kan
+man nøjes med at skrive xxx i enten taxon eller dansk navn. Standard er, at taxon SKAL være udfyldt. 
+(fra spørgsmålet om hvordan ubestemmelige / usikre arter håndteres)
+
+- visning af fund : der slåes nu billede op for en art via allearters API. Hvis der er et billede vises
+det til højre for fundets oplysninger.
+
+
+
+
+
+
+

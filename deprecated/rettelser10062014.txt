@@ -1,0 +1,35 @@
+
+- opslag på indtaster tilføjet ("intelligent liste")
+
+- "stor grøn løvgræshoppe" fejl rettet (det var rigtig nok fordi der var to mellemrum, så koksede riget)
+
+- position opdateres også hvis man trækker markøren henover kortet (Anna)
+
+- indtaster, gruppe og hold sættes til hhv brugernavn og sidste indtastning ved "nyt fund", OG stort ÆØÅ virker. 
+
+- Ift Isabel "Hvis jeg fjerner hak i ”endelig bedømt”, trykker gem fund, og sætter hak i ”endelig bedømt” registreres det som et nyt fund – skal vi have det sådan?"
+----> Ja, eller? Det var vist sådan det skulle være, så man hurtigt kunne oprette flere fund af samme type. Det gælder også hvis man retter/ændrer i de øvrige felter.
+
+- Isabel, "Artsgrupper for alger står hver to gange – i ental og i flertal, fx Øjealge / Øjealger, det er vel ikke meningen?". Det er kun disse,
+det skyldes at en person indtastede disse artsgrupper manuelt ved event 2013 - der findes slet ikke nogle artsgrupper ved navn øjealge, iflg allearter.
+Til gengæld er det rettet, så det kun er artsgrupper som er repræsenteret for den aktuelle event, man kan vælge fra listen.
+
+- automatisk opslag på videnskabeligt -> dansk navn virker igen.
+
+- Efter samråd med Lotte er der oprettet et note felt, hvor man kan tilføje særlige oplysninger omkring fundet (tvivl om artsbestemmelse, antal fisk osv)
+
+- man kan uploade billeder (det var serveren der ikke gav rettigheder)
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+

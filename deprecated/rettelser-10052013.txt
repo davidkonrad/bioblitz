@@ -1,0 +1,3 @@
+
+- Teksten over knapperne er duceret en smule, for ikke at ombryde på ipad / små skærme.
+

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<html manifest="debug.cache">
+<meta http-equiv="x-ua-compatible" content="IE=Edge"/>
+<meta charset="utf-8">
+<title>Bioblitz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+<style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+</style>
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/webcam.js?ver=123"></script>
+<script src="js/user.js?ver=plon"></script>
+<script src="js/admin.js"></script>
+<script src="js/bioblitz.js?ver=qwerty"></script>
+<script src="js/resultater.js?ver=xyz"></script>
+<script src="js/artsgruppe-icons.js"></script>
+<link href="bootstrap/bootstrap-select/bootstrap-select.css" rel="stylesheet">
+<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="bootstrap/bootstrap-select/bootstrap-select.js"></script>
+<link href="css/bioblitz.css" rel="stylesheet">
+<link rel="stylesheet" href="FortAwesome-Font-Awesome/css/font-awesome.min.css">
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAOj0_u0DRE2dK8X9YptdCXtxt89UCqfoo&amp;sensor=true"></script>
+<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/keydragzoom/src/keydragzoom.js"></script>
+<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">google.load("visualization", "1", {packages:["corechart"]});</script>
+</head>
+<body>
+   <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#"></a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li id="nav-forside"><a href="index.html?goto=forside">Om Bioblitz</a></li>
+			  <li id="nav-administration" style="display:none;"><a href="admin.html">Administration</a></li>
+			  <li class="dropdown" id="nav-manual">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Vejledning <b class="caret"></b></a>
+                <ul class="dropdown-menu" id="vejledning-dropdown">
+				 <li><a href="#" onclick="Blitz.setManual('Indtastning');">Indtastning af fund</a></li>
+				 <li><a href="#" onclick="Blitz.setManual('Resultater');">Resultater</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bioblitz events <b class="caret"></b></a>
+                <ul class="dropdown-menu" id="event-dropdown">
+                </ul>
+              </li>
+			  <li id="nav-admin" class="hidden"><a href="index.html">Rediger event</a></li>
+            </ul>
+			<div class="control-group" id="login">
+              <div class="navbar-form pull-right">
+	             <input class="span2" type="text" id="username" placeholder="Brugernavn">
+	             <input class="span2" type="password" id="password" placeholder="Password">
+	             <button type="submit" class="btn" onclick="User.login();">Log på</button>
+              </div>
+			</div>	
+			<div class="control-group" id="logout">
+            <div class="navbar-form pull-right">
+				<span id="currentuser"></span>
+	            <button type="submit" class="btn" onclick="User.logout();">Log ud</button>
+			</div>	
+			</div>	
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="hero-unit" id="section-frontpage" style="overflow:auto;display:none;">
+        <h1>Bioblitz</h1>
+		<h3>- <em>Find byens liv</em></h3>
+        <p style="float:left;">
+<img src="img/large_nochildtop1.jpg" alt="Bioblitz" style="float:right;clear:left;border:1px solid silver;" class="img-polaroid">
+BioBlitz er en fælles jagt på arter – i kapløb med tiden. Hvor mange forskellige arter kan vi finde i løbet af en enkelt dag, på et enkelt sted?
+Børn, voksne, elever, studerende og museets forskere samarbejder om at kortlægge mangfoldigheden af arter på en udvalgt lokalitet. Planter, svampe og dyr – alt det liv vi overhovedet kan finde.
+<br><br>
+Alle indsamlede arter bestemmes med kvalificeret hjælp fra museets forskere og registreres i et dertil indrettet registreringssystem så resultaterne kan bruges fremadrettet.
+Registreringssystemet er udviklet i samarbejde med DanBIF og projektet <a target=_blank href="allearter.dk">allearter.dk</a>.
+	  </p>
+      </div>
+
+      <div class="hero-unit" id="section-event" style="display:none;">
+        <h1 id="event_title">BioBlitz</h1>
+        <p id="event_desc">
+		</p>
+		<h3>Sted</h3>
+		<p id="event_sted"></p>
+		<h3 id="event_date"></h3>
+		<table>
+		<tr><td class="caption">Arrangør</td><td id="event_arrangoer"></td></tr>
+		<tr><td class="caption">Kontaktperson</td><td id="event_kontaktperson"></td></tr>
+		<tr><td class="caption">Email</td><td id="event_kontaktperson_mail"></td></tr>
+		</table>
+      </div>
+
+<div class="hero-unit" id="section-indtast" style="display:none;overflow:auto;padding-right:10px;">
+</div>
+
+<div class="hero-unit" id="section-fund" style="display:none;overflow:auto;">
+  <h2 id="h2-fund">Fund</h2>
+  <table id="table-fund" class="table table-bordered table-hover table-striped" style="width:98%;">
+	<thead>
+		<tr>
+			<th></th> <!-- endeligt bestemt -->
+			<th>ID</th>
+			<th>Dansk navn</th>
+			<th>Videnskabeligt navn</th>
+			<th>Artsgruppe</th>
+			<th>Tidspunkt</th>
+			<th>Antal</th>
+			<th>Finder</th>
+			<th>Hold</th>
+			<th>Gruppe</th>
+			<th></th> <!-- billeder-->
+		</tr>
+	</thead>
+	<tbody></tbody>
+  </table>
+</div>
+
+<div class="hero-unit" id="section-soeg" style="display:none;overflow:auto;padding-right:10px;">
+  <h2>Søg i Fund</h2>
+  <form class="form-horizontal" id="fund-soeg">
+	<table><tr><td>
+    <div class="soeg-box">
+    <input type="hidden" name="soeg-event_id" id="soeg-event_id">
+    <div class="control-group">
+     <label class="control-label" for="soeg-id">ID-nr</label>
+     <div class="controls">
+      <input type="text" id="soeg-id" name="soeg-id" class="input-small" placeholder="#">
+     </div>
+     <label class="control-label" for="soeg-dknavn">Dansk navn</label>
+     <div class="controls">
+      <input type="text" id="soeg-dknavn" name="soeg-dknavn" placeholder="Dansk navn" data-provide="typeahead">
+     </div>
+     <label class="control-label" for="taxon">Videnskabeligt navn</label>
+     <div class="controls">
+      <input type="text" id="soeg-taxon" name="soeg-taxon" placeholder="Videnskabeligt navn (taxon)" data-provide="typeahead">
+     </div>
+     <label class="control-label" for="soeg-artsgruppe_dk">Artsgruppe (dk)</label>
+     <div class="controls">
+      <input type="text" id="soeg-artsgruppe_dk" name="soeg-artsgruppe_dk" placeholder="Artsgruppe" data-provide="typeahead">
+     </div>
+   </div>
+   </td><td>
+   <div class="soeg-box">
+    <div class="control-group">
+     <label class="control-label" for="soeg-finder">Finder</label>
+     <div class="controls">
+      <input type="text" id="soeg-finder" name="soeg-finder" placeholder="Finders navn">
+     </div>
+     <label class="control-label" for="soeg-finder-hold">Finder hold</label>
+     <div class="controls">
+      <input type="text" id="soeg-finder-hold" name="soeg-finder-hold" placeholder="Finders hold">
+     </div>
+     <label class="control-label" for="soeg-finder-gruppe">Finder gruppe</label>
+     <div class="controls">
+      <input type="text" id="soeg-finder-gruppe" name="soeg-finder-gruppe" placeholder="Finders gruppe">
+     </div>
+     <label class="control-label" for="soeg-indtaster">Indtaster</label>
+     <div class="controls">
+      <input type="text" id="soeg-indtaster" name="soeg-indtaster" placeholder="Indtaster">
+     </div>
+   </div>
+    </td><td style="vertical-align:top;">
+	 <span style="width:200px;">
+  	   <input type="checkbox" id="soeg-ej-bestemte" name="soeg-ej-bestemte" style="vertical-align:top;">
+       <label style="clear:none;display:inline;vertical-align:top;" for="soeg-ej-bestemte">Kun ikke-bestemte fund</label>
+     </span><br><br>
+	 <a class="btn btn-success btn-large" href="#" id="btn-soeg" style="margin-top:16px;"><i class="icon-search icon-white"></i>&nbsp;Søg</a>
+   </div>
+   </td></tr></table>
+
+  </form>
+  <h2>Søgeresultater</h2>
+  <table id="table-soeg" class="table table-bordered table-hover table-striped table-condensed soeg" style="width:98%;">
+	<thead>
+		<tr>
+			<th></th> <!-- endeligt bestemt -->
+			<th>ID</th>
+			<th>Videnskabeligt navn</th>
+			<th>Artsgruppe</th>
+			<th>Dansk navn</th>
+			<th>Finder</th>
+			<th>Hold</th>
+			<th></th> <!-- billeder -->
+			<th>Indtaster</th>
+			<th style="width:120px;">Tidspunkt</th>
+		</tr>
+   </thead>
+   <tbody></tbody>
+  </table>
+</div>
+
+<div class="hero-unit" id="section-foto" style="display:none;overflow:auto;">
+  <h2 id="h2-webcam">Fund - tilknyt foto(s)</h2>
+	<a id="btn-foto-take" class="btn btn-large btn-success" style="width:130px;"><i class="icon-camera icon-white"></i>&nbsp;Tag billede</a>
+	<a id="btn-foto-save" class="btn btn-large btn-danger" style="width:130px;"><i class="icon-ok icon-white"></i>&nbsp;Tilknyt foto</a>
+	<a id="btn-foto-new" class="btn btn-large btn-primary" style="width:130px;"><i class="icon-refresh icon-white"></i>&nbsp;Nyt foto</a>
+	<form action="ajax/upload.php" method="post" enctype="multipart/form-data" id="upload-form" style="float:right;">
+	<input type="hidden" id="upload-fund_id" name="upload-fund_id">
+	<input type="hidden" id="upload-event_id" name="upload-event_id">
+	<input type="file" name="file" id="file" class="btn btn-primary"><br><input id="upload-btn" type="submit" value="Upload foto" class="btn btn-success">
+	</form>
+
+	<br><div id="foto-msg" style="float:left;clear:both;"></div><br>
+	<div style="clear:both;float:left;height:3px;width:100%;"></div>
+<script type="text/javascript">
+document.write(webcam.get_html(1000, 750, 1280, 1024));
+webcam.set_api_url('billed_upload.php');
+webcam.set_quality(100); // JPEG quality (1 - 100)
+webcam.set_shutter_sound(true); // play shutter click sound
+webcam.set_hook('onComplete', 'webcamCompletion');
+</script>
+</div>
+
+<div class="hero-unit" id="section-show-fund" style="display:none;overflow:auto;">
+  <h2 id="h2-show-fund"></h2>
+  <div>
+    <div id="show-fund-details" style="float:left;clear:none;"></div>
+    <div id="type-billede" style="float: left;clear:none;margin-left:30px;"></div>
+  </div>
+</div>
+
+<div class="hero-unit" id="section-manual" style="display:none;overflow:auto;">
+</div>
+
+<div class="hero-unit" id="section-statistik" style="display:none;overflow:auto;background-color: white;">
+<ul class="nav nav-tabs" id="myTab">
+  <li><a href="#statistik-kort" data-toggle="tab">Fund på kort</a></li>
+  <li><a href="#statistik-graf" data-toggle="tab">Grafik</a></li>
+  <li><a href="#download" data-toggle="tab">Eksportér</a></li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane active" id="statistik-kort">
+	<form class="form-inline">
+		<label>Artsgruppe</label>&nbsp;
+		<select id="select-artsgruppe"></select>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<label>Hold</label>&nbsp;
+		<select id="select-hold"></select>
+	</form>
+    <div id="statistik-map" style="width:1047px;height:700px;border:1px solid silver;"></div>
+	<div id="piktogrammer"></div>
+  </div>
+  <div class="tab-pane" id="statistik-graf" style="XXoverflow:hidden;">
+	<div id="hold-riger"></div>
+	<div id="hold-artsgrupper"></div>
+  </div>
+  <div class="tab-pane" id="download">
+	 <a class="btn btn-primary btn-large" href="#" id="download-excel" style="margin-top:16px;"><i class=" icon-download icon-white"></i>&nbsp;Eksportér til Excel</a>
+  	  <br><br>
+	 <a class="btn btn-primary btn-large" href="#" id="download-csv" style="margin-top:16px;"><i class=" icon-download icon-white"></i>&nbsp;Eksportér til CSV</a>
+	  <br><br>
+	 <a class="btn btn-primary btn-large" href="#" id="download-gbif" style="margin-top:16px;"><i class=" icon-download icon-white"></i>&nbsp;Eksportér som GBIF-data</a>
+  	  <br><br>
+	  <hr>
+  </div>    
+</div>
+</div>
+
+
+      <div class="row">
+        <div class="span2">
+          <h2>Alle fund</h2>
+          <p><a class="event btn btn-warning" id="btn-event-fund" href="index.html?goto=fund"><i class="icon-list icon-white"></i>&nbsp;Vis mere &raquo;</a></p>
+        </div>
+        <div class="span2">
+          <h2>Søg</h2>
+          <p><a class="event btn btn-warning" id="btn-event-soeg" href="index.html?goto=soeg"><i class="icon-search icon-white"></i>&nbsp;Vis mere &raquo;</a></p>
+        </div>
+        <div class="span2">
+          <h2>Resultater</h2>
+          <p><a class="event btn btn-warning" id="btn-event-statistik" href="index.html?goto=statistik"><i class="icon-signal icon-white"></i>&nbsp;Vis mere &raquo;</a></p>
+        </div>
+        <div class="span1">
+			&nbsp;
+        </div>
+        <div class="span3">
+          <h2>Indtast fund</h2>
+          <p><a class="event btn btn-warning" id="admin-data" href="index.html?goto=indtast"><i class="icon-pencil icon-white"></i>&nbsp;Vis mere &raquo;</a></p>
+        </div>
+        <div class="span2">
+          <h2>Webcam</h2>
+          <p><a class="event btn btn-warning" id="admin-image" href="index.html?goto=foto"><i class="icon-camera icon-white"></i>&nbsp;Vis mere &raquo;</a></p>
+        </div>
+      </div>
+      <hr>
+      <footer id="footer">
+        <p>&copy; DANBIF 2013</p>
+		<div class="footer-box">
+		<a href="http://www.danbif.dk/" target=_blank title="DanBIF - Danish Biodiversity Information Facility">
+		<img src="logo/DanBIF-logo_2generation_final.jpg" alt="DANBIF">
+		</a>
+		</div>
+		<div class="footer-box">
+		<a href="http://allearter.dk/" target=_blank title="allearter.dk">
+		<img src="logo/Allearter_logo_withtext2_final.jpg" alt="allearter.dk">
+		</a>
+		</div>
+		<div class="footer-box">
+		<a href="http://snm.ku.dk/" target=_blank title="Statens Naturhistoriske Museum">
+		<img src="logo/SNM-logo1_final.jpg" alt="Statens Naturhistoriske Museum">
+		</a>
+		</div>
+      </footer>
+
+    </div>
+
+<div id="msg"></div>
+
+</body>
+</html>
+

@@ -1,0 +1,9 @@
+
+- "digrammer" er nu "grafik", "hold fordelt på riger" et stakket stolepediagram. 
+"Artsgrupper fordelt" på hold har nu samme overordnede farver som stolpediagrammet 
+("fugle" har samme farve som "dyreriget")
+
+- Søgning er brudt om, så resultatet ligger nedenfor formularen. Der er "vis hånd"-cursor, taxon er
+ændret til "videnskabeligt navn". Søgningen huskes nu, så man ikke skal søge forfra hver gang.
+
+

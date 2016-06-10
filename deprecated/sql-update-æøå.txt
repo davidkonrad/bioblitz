@@ -1,0 +1,26 @@
+update event_fund set dknavn = replace(dknavn, "Ãƒâ€¦", "Å")
+update event_fund set dknavn = replace(dknavn, "Ã¸", "ø")
+update event_fund set artsgruppe_dk = replace(artsgruppe_dk, "Ã¸", "ø")
+update event_fund set finder_hold = replace(finder_hold, "Ã¦", "æ")
+update event_fund set finder_navn = replace(finder_navn, "Ã¸", "ø")
+update event_fund set bestemmer = replace(bestemmer, "Ã¸", "ø")
+
+Ã¸ = ø
+Ãƒâ€¦ = Å
+Ã¦ = æ
+
+Windows-1252
+
+Ã«, Ã, Ã¬, Ã¹, Ã
+
+update <table> set <field> = replace(<field>, "Ã«", "ë")
+update <table> set <field> = replace(<field>, "Ã", "à")
+update <table> set <field> = replace(<field>, "Ã¬", "ì")
+update <table> set <field> = replace(<field>, "Ã¹", "ù")
+
+
+Ã« = ë
+Ã = à
+Ã¬ = ì
+Ã¹ = ù
+

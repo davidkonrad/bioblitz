@@ -1,0 +1,33 @@
+
+<ul class="nav nav-tabs" id="myTab">
+  <li><a href="#statistik-kort" data-toggle="tab">Fund på kort</a></li>
+  <li><a href="#statistik-graf" data-toggle="tab">Grafik</a></li>
+</ul>
+
+<style type="text/css">
+.piechart {
+	float: left;
+	clear: none;
+	margin: 10px;
+}
+</style>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="statistik-kort">
+	<form class="form-inline">
+		<label>Artsgruppe</label>&nbsp;
+		<select id="select-artsgruppe"></select>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<label>Hold</label>&nbsp;
+		<select id="select-hold"></select>
+	</form>
+    <div id="statistik-map" style="width:947px;height:600px;border:1px solid silver;"></div>
+	<div id="piktogrammer"></div>
+  </div>
+  <div class="tab-pane" id="statistik-graf" style="XXoverflow:hidden;">
+	<div id="hold-riger"></div>
+	<div id="hold-artsgrupper"></div>
+  </div>
+
+</div>
+

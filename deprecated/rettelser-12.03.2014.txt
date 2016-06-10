@@ -1,0 +1,83 @@
+Hele brugersystemet er som nævnt skrevet om. Der er nu 3 forskellige slags brugere :
+
+- "superbruger"
+Det er dig, Mia. (admin / #mia?123#) Men der kan være x antal superbrugere, som skal oprettes manuelt. Superbrugeren kan 
+
+	- oprette nye events
+	- oprette event administratorer
+	- redigere i alle events
+	- oprette brugere i alle events
+	- slå events til og fra (synlighed)
+	- oprette fund og billeder i alle events
+
+- event administrator
+Den "lokale" administrator for den enkelte event. Der kan kun være én administrator for en event. Event administratoren kan 
+
+	- redigere eventen
+	- oprette brugere på eventen
+	- oprette fund og billeder
+
+
+- event bruger
+Det er slet og ret indtasterne. De kan oprette fund og billeder
+
+Brugere logges ind for 3 timer ad gangen, dvs efter 3 timer uden aktivitet logges man ud.
+Og så er der naturligvis en fjerde bruger, "anonym", som kan se resultoversigt, søge osv. 
+
+
+Superbruger administration
+---------------------------
+
+Når man logger ind springes der straks til administrationssiden. Man kan gå til forsiden og tilbage igen til administration via menupunktet "administration"
+
+Opret ny event - man indtaster slet og ret et eventnavn, eventen oprettes og man går umiddelbart til administrationssiden for eventen.
+Når der oprettes en ny event oprettes der samtidig en event administrator. Denne får navnet eventXX (id for eventet) og et autogenereret 
+password ala IbD4EFsh. Det er disse loginoplysninger administratoren af eventen skal have for at kunne logge ind og administrere sin event.
+Superbrugeren kan til enhver tid ændre brugernavn/password for event administratoren. 
+
+Som noget nyt kan superbrugeren angive om en event er synlig eller ej, dvs kan ses af anonyme brugere eller indtaster. Helt lavpraktisk om
+en event kan vælges fra event listen eller ej. En event der ikke er synlig kan altid ses af event administratoren og superbrugren.
+
+Ellers burde indtastning / rettelser for en event være ret intuitiv. Ved klik på sted / koordinat -felterne popper et vindue op med et 
+google map. Her skal man placere markeren hvor eventet finder sted. Også dato er lidt udvidet, her popper en lille kalender op hvorfra man 
+skal vælge datoen. Googlekortet og kalenderen er implementeret for at sikre at data bliver så konsistent som muligt. Dvs så sted-angivelsen rent faktisk
+er en brugbar lat/lng, og datoen rent faktisk er en korrekt dato.
+
+Under hver event administrationsside er der en liste af brugere tilknyttet eventen. Med brugere menes naturligvis indtastere.
+Det er lige ud af landevejen, som noget nyt kan man tilknytte en emaildresse til brugerne. Brugerdelen er forbedret ift tidligere tiders
+"blinde" anvendelse.  Nu skelnes der mellem store og små bogstaver, der kan altså være både en bruger mia og en bruger Mia for en given event. 
+Og der kan være en bruger mia osv for hver eneste event i systemet. Når man opretter eller redigerer en bruger tjekkes der fortløbende
+om det brugernavn man forsøger at oprette allerede findes for den pågældende event. Brugernavne er unikke for hver event.
+
+
+Event administrator
+---------------------
+
+Det er sådan set det samme. Event administratoren kan redigere i sin event og oprette brugere, men ikke redigere sin egen konto. 
+
+
+Manual
+------------------
+
+Jeg har desværre ikke fået skrevet noget. Men se de to attachments, indtastning.html og res.html - og se så menupunkterne under "Vejledning" i toppen.
+Siderne er bygget i sektioner således, f.eks indtastning.html :
+
+<br>
+<h4>Om allearter.dk</h4>
+<p id="allearter">
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+</p>
+
+Mellem <p id="allearter"> ... </p> kan der så udfyldes en beskrivende tekst / manual. Det kan indeholde HTML / billeder osv.
+Det smarte er så -> gå til indtastnings-siden og hold musen henover de forskellige labels, f.eks "Opslag på allearter.dk" eller "Endeligt bedømt"
+at en popop med indholdet fra den korresponderende sektion i indtastning.html popper op! 
+
+Der kan sagtens være flere, færre eller andre sektioner. Det er bare et forslag. Vi kan i fællesskab få konstrueret noget tekst der fungerer
+både som manual / vejledning og som popup / vejleder også når man er ved de enkelte funktioner. 
+
+
+
+
+
+
+

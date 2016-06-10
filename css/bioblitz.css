@@ -1,0 +1,159 @@
+.popover {
+	font-size: 12px;
+	line-height: 14px;
+}
+
+input.warning {
+	/*background-color: pink;*/
+	color: red !important;
+}
+#logout {
+	display: none;
+}
+#currentuser {
+	color: white;
+	margin: 10px;
+	font-size:160%;
+	position: relative;
+	top: 10px;
+	font-weight: bold;
+}
+.brand, .brand:visited, .brand:link {
+	color: lime;
+	position: relative;
+	top: 10px;
+}
+td {
+	font-size: 80%;
+	font-weight: bold;
+	padding-left: 10px;
+}
+td.caption {
+	font-weight: normal;
+}
+
+#table-soeg td {
+	cursor: pointer;
+	white-space : nowrap;
+}
+#table-soeg th {
+	white-space : nowrap;
+}
+
+
+#fund-left {
+	width: 520px;
+	float: left;
+	clear: none;
+}
+#fund-right {
+	float: left;
+	clear: none;
+}
+#fund-map {
+	width: 550px;
+	height: 550px;
+	border: 3px solid silver;
+}
+#msg {
+	position: absolute;
+	z-index: 1001;
+	width: 300px;
+	height: 50px;
+	padding: 20px;
+	font-weight: bold;
+	padding-top: 35px;
+	font-size: 24px;
+	display: none;
+	text-align: center;
+	border: 2px solid silver;
+	background-color: #51A351;
+	color: white;
+}
+#table-fund {
+}
+.table td {
+	background-color: white;
+}
+.table th {
+	background-color: #dadada;
+}
+.footer-box {
+	float: left;
+	clear: none;
+	text-align: center;
+	margin-right:30px;
+}
+.footer-box img {
+	height: 90px;
+	border: 0;
+}
+.star {
+	color: gray;
+	margin-left: 6px;
+}
+#foto-left {
+	width: 180px;
+	float: left;
+	margin-right: 20px;
+}
+#foto-right {
+	float: left;
+	clear: none;
+}
+.soeg-box {
+	width: 350px;
+	float: left;
+	margin-right: 20px;
+	clear: none;
+	display: inline;
+	XXoverflow: visible;
+}
+.soeg-box .control-label {
+	width: 130px;
+}
+.soeg-box .controls {
+	margin-left : 150px;
+}
+table.soeg {
+	width:650px;
+	max-width:650px;
+	clear:none;
+	float:left;
+	overflow:hidden;
+	font-size:14px;
+}
+i {
+	cursor: pointer;
+}
+span.fund-id-label {
+	background-color:green;
+	color:white;
+	padding-left:4px;
+	padding-right:6px;"
+}
+.desc-caption {
+	float: left;
+	clear: left;
+	font-weight: bold;
+	width: 150px;
+}
+.desc-info {
+	float: left;
+	clear: right;
+}
+td.center {
+	text-align: center;
+}
+.piechart {
+	float: left;
+	clear: none;
+	margin: 10px;
+}
+li.hidden {
+	display: none;
+}
+
+.modal-backdrop {
+	background-color: gray;
+}

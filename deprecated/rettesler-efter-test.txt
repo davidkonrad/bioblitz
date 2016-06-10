@@ -1,0 +1,55 @@
+
+
+- der er nu opslag på de fulde navne, så f.eks mælkebøtte osv kan slåes op. 
+
+- ved søgning på artsgruppe, søges der nu eksakt på artsgruppe (jfr "fugle"/"sommerfugle" sammenblanding)
+
+- nu er der hak/flueben i "alle fund" ud for de fund der er endeligt bedømt. 
+
+- samme slags flueben under søgeresultater. Nu er hold og indtaster tillige med i søgeresultater.
+Søgeresultater ombryder ikke længere linier, og tidsstemplet bliver formateret (dansk dag/måned og ingen sekunder)
+
+- ift flueben samt rediger/webcam-ikoner under søgeresultater er de nu gjort større og mere tydelige. 
+Sig til hvis de er for voldsomme, eller evt skal have farver. 
+
+- søgning, nu kan man søge på ID-nr og på indtaster. 
+Man kan nu krydse "Kun ikke-bedømte fund" af, og så returneres kun ikke-bedømte fund indenfor søgningen.
+Indtaster er en "løs" søgning, så man kun behøver skrive de første bogstaver af en navn
+
+- indtastning, man kan nu "trække" i markøren på kortet for at flytte den, men kan fortsat klikke som før.
+
+- indtastning, ved redigering opdateres "endeligt bedømt" nu korrekt.
+Endeligt bestemt er nu altid hakket af, som udgangspunkt, dvs ved "Nyt fund".
+
+----------
+BEMÆRK: Jeg ved ikke lige helt, hvordan jeg sådan "logisk" skulle kunne afgøre om 
+det indtastede i videnskabeligt navn rent faktisk ER et videnskabeligt navn.
+Det jeg gør er så, at jeg slår det videnskabelige navn op i allearter når man forlader feltet (tabber ud, klikker)
+hvis ikke der er et match, så afkrydes "endeligt bedømt", hvis der et match, krydses det af.
+Jeg ved ikke helt hvordan det vil fungere i praksis, men det vil i hvert fald forhindre
+at endeligt bedømte ikke gemmes som ikke-bedømte og vice versa.
+---------
+
+- indtastning, hold er nu obligatorisk. 
+Nu "huskes" forrige hold, dvs fra sidst oprettede eller opdaterede fund.
+Ved gruppe, hold og navn slåes der nu op i eksisterende grupper, hold og navne, når man begynder
+at indtaste (opslag vises på liste akkurat som videnskabeligt navn osv)
+
+- resultater, fund på kort. 
+hold med æøå vises nu korrekt i liste og kan vises på kortet.
+listen med artsgrupper indeholder kun de artsgrupper som der er fund for
+Fører man musen henover fundikonerne vises en popup med detaljer for fundet
+Klikker man derimod på et fundikon, går man til fundets "side"
+
+Ift kommentarer :
+"Hvis jeg laver en kortsøgning på en af mine grupper som kun har fundet ting i Østre Anlæg, så viser den alligevel kortudsnittet fra fælleden. – Kan det sættes til at vise kortudsnittet der hvor fundene er? (Men egentligt er det jo nok lige meget bare den sættes til at vise Østre Anlæg til BioBlitzen)"
+
+Kortet viser centrum/stedet for bioblitz. Det skal naturligvis være det rigtige centrum, jeg ved ærlig talt ikke
+hvor Østre Anlæg ligger ift Fælleden, er ikke københavner. 
+
+****
+
+
+
+
+

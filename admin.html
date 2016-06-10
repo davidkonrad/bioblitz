@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta http-equiv="x-ua-compatible" content="IE=Edge"/>
+<meta charset="utf-8">
+<title>Administration - Bioblitz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+<style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+input[readonly] {
+	background-color: white;
+	cursor: pointer;
+}
+</style>
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script src="datepicker/js/bootstrap-datepicker.js"></script>
+<link href="datepicker/css/datepicker.css" rel="stylesheet">
+<script src="js/bioblitz.js?ver=321"></script>
+<script src="js/user.js?ver=789"></script>
+<script src="js/admin.js?ver=321"></script>
+<script src="js/resultater.js?ver=xyz"></script>
+<link href="bootstrap/bootstrap-select/bootstrap-select.css" rel="stylesheet">
+<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="bootstrap/bootstrap-select/bootstrap-select.js"></script>
+<link href="css/bioblitz.css" rel="stylesheet">
+<link rel="stylesheet" href="FortAwesome-Font-Awesome/css/font-awesome.min.css">
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAOj0_u0DRE2dK8X9YptdCXtxt89UCqfoo&amp;sensor=true"></script>
+<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/keydragzoom/src/keydragzoom.js"></script>
+<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">google.load("visualization", "1", {packages:["corechart"]});</script>
+<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+<!--
+<script type="text/javascript" src="ckeditor_4.3.2/ckeditor.js"></script>
+-->
+</head>
+<body>
+   <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+			  <li id="nav-index"><a href="index.html">&#9668;&nbsp;Forside</a></li>
+              <li id="nav-create"><a href="#" onclick="Admin.createEvent();">Opret ny event</a></li>
+              <li class="dropdown" id="event-dropdown-li">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Rediger events <b class="caret"></b></a>
+                <ul class="dropdown-menu" id="event-dropdown">
+                </ul>
+              </li>
+            </ul>
+			<div class="control-group" id="logout" style="display: inline;">
+	            <div class="navbar-form pull-right">
+					<span id="currentuser"></span>
+		            <button type="submit" class="btn" onclick="User.logout();">Log ud</button>
+				</div>	
+			</div>	
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="hero-unit" id="section-frontpage" style="overflow:auto;">
+        <h1>Administration</h1>
+        <p style="float:left;">
+Klik på valgmulighederne i topmenuen. Du kan enten oprette en ny event eller redigere en eksisterende event. 
+	  </p>
+      </div>
+
+      <div class="hero-unit" id="section-edit" style="display:none;overflow:auto;">
+  <h2 id="h2-header">Rediger event</h2>
+
+  <form class="form-horizontal" id="event-form-admin">
+    <div class="control-group">
+     <input type="hidden" id="event-adm-id" name="event-adm-id">
+     <label class="control-label" for="event-titel" title="eks. Bioblitz 2013">Administrator</label>
+     <div class="controls">
+      <input type="text" id="event-adm-navn" name="event-adm-navn" class="input-medium" placeholder="">
+		&nbsp;-&nbsp;
+      <input type="text" id="event-adm-password" name="event-adm-password" class="input-medium" placeholder="">
+      <a class="btn btn-mini" onclick="Admin.createPassword();">Generér password</a>
+     </div>
+     <label class="control-label" for=""></label>
+     <div class="controls">
+      <button class="btn btn-primary" id="event-adm-save" role="button">Gem ændringer</button>	
+	  &nbsp;<span id="event-adm-msg"></span>
+     </div>
+	 <hr style="margin-bottom:0px;">
+    </div>
+  </form>
+
+  <form class="form-horizontal" id="event-form">
+	<input type="hidden" id="event_id" name="event_id">
+    <div class="control-group">
+     <label class="control-label" for="event-titel" title="Er eventen synlig for omverdenen">Synlig / aktiv</label>
+     <div class="controls">
+      <input type="checkbox" id="event-synlig" name="event-synlig" style="margin-bottom:5px;">
+     </div>
+     <label class="control-label" for="event-titel" title="eks. Bioblitz 2013">Officielt navn</label>
+     <div class="controls">
+      <input type="text" id="event-titel" name="event-titel" class="input-xxlarge" placeholder="#">
+     </div>
+     <label class="control-label" for="event-dato" title="Vælg dato fra popup-kalender">Dato</label>
+     <div class="controls">
+      <input type="text" id="event-dato" name="event-dato" class="input-small" >
+     </div>
+     <label class="control-label" for="event-dato-tekst" title="eks. Fredag den 17 maj 2013">Dato tekst</label>
+     <div class="controls">
+      <input type="text" id="event-dato-tekst" name="event-dato-tekst" class="input-large">
+     </div>
+	 <br>
+     <label class="control-label" for="event-arrangoer" title="eks. Statens Naturhistoriske Museum, Skole- og gymnasietjenesten">Arrangør</label>
+     <div class="controls">
+      <input type="text" id="event-arrangoer" name="event-arrangoer" class="input-xxlarge">
+     </div>
+     <label class="control-label" for="event-kontaktperson">Kontaktperson</label>
+     <div class="controls">
+      <input type="text" id="event-kontaktperson" name="event-kontaktperson" class="input-xlarge">
+     </div>
+     <label class="control-label" for="event-kontaktperson-mail">Kontaktperson email</label>
+     <div class="controls">
+      <input type="text" id="event-kontaktperson-mail" name="event-kontaktperson-mail" class="input-xlarge">
+     </div>
+	 <br>
+     <label class="control-label" for="event-sted" title="eks. BioBlitz finder sted i Østre Anlæg i København">Sted (beskrivelse)</label>
+     <div class="controls">
+      <input type="text" id="event-sted" name="event-sted" class="input-xxlarge">
+     </div>
+     <label class="control-label" title="Længdegrad / breddegrad (lng/lat)">Sted (koordinat)</label>
+     <div class="controls">
+	  <input type="text" id="event-lng" name="event-lng" class="input-mini" readonly="readonly">&nbsp;/&nbsp;
+	  <input type="text" id="event-lat" name="event-lat" class="input-mini" readonly="readonly">
+	  <br>
+	  <hr>
+     </div>
+     <label class="control-label" for="event-beskrivelse">Beskrivelse</label>
+     <div class="controls">
+      <textarea id="event-beskrivelse" name="event-beskrivelse" class="input-xxlarge">&nbsp;</textarea>
+     </div>
+     <label class="control-label" for=""></label>
+     <div class="controls">
+      <button class="btn btn-primary" id="event-save" role="button">Gem ændringer</button>	
+	  &nbsp;<span id="event-msg"></span>
+     </div>
+	 <hr>
+   </div>
+  </form>
+  <form class="form-horizontal" id="event-form-users" style="margin-top:0px;">
+    <div class="control-group">
+     <label class="control-label"></label>
+     <div class="controls">
+      <button class="btn btn-primary" id="user-create" role="button">Opret ny bruger</button>	
+	</div>
+	<br>
+     <label class="control-label"></label>
+     <div class="controls">
+
+	<table id="table-users" class="table table-bordered table-hover table-striped table-condensed" style="width:68%;">
+	<thead>
+		<tr>
+			<th style="width:120px;">Brugernavn</th>
+			<th style="width:120px;">Password</th>
+			<th>Email</th>
+			<th style="width:20px;"></th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+	</table>
+	</div>
+	</div>
+  </form>
+</div>
+
+      <hr>
+      <footer id="footer">
+        <p>&copy; DANBIF 2013</p>
+		<div class="footer-box">
+		<a href="http://www.danbif.dk/" target=_blank title="DanBIF - Danish Biodiversity Information Facility">
+		<img src="logo/DanBIF-logo_2generation_final.jpg" alt="DANBIF">
+		</a>
+		</div>
+		<div class="footer-box">
+		<a href="http://allearter.dk/" target=_blank title="allearter.dk">
+		<img src="logo/Allearter_logo_withtext2_final.jpg" alt="allearter.dk">
+		</a>
+		</div>
+		<div class="footer-box">
+		<a href="http://snm.ku.dk/" target=_blank title="Statens Naturhistoriske Museum">
+		<img src="logo/SNM-logo1_final.jpg" alt="Statens Naturhistoriske Museum">
+		</a>
+		</div>
+      </footer>
+
+    </div>
+
+<div id="map-modal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="ModalLabel">Sted / koordinat</h3>
+  </div>
+  <div class="modal-body">
+    <div id="map-modal-map" style="width:520px;height:330px;"></div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Luk</button>
+    <button class="btn btn-primary" id="event-sted-update">Opdater sted</button>
+  </div>
+</div>
+
+<div id="user-modal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="ModalLabel">Opret bruger</h3>
+  </div>
+  <div class="modal-body">
+	<form class="form-horizontal" id="event-form-user">
+    <div class="control-group">
+     <label class="control-label">Navn</label>
+     <div class="controls">
+      <input type="text" id="user-name" name="user-name">
+	  <div style="clear:both;float:left;width:100%;" id="user-msg">&nbsp;</div>
+     </div>
+     <label class="control-label">Password</label>
+     <div class="controls">
+      <input type="text" id="user-password" name="user-password">
+     </div>
+	 <br>
+     <label class="control-label">Email</label>
+     <div class="controls">
+      <input type="text" id="user-email" name="user-email">
+     </div>
+
+  </div>
+</form>
+  <div class="modal-footer">
+    <button class="btn btn-primary" id="event-user-save">Gem og luk</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Fortryd</button>
+  </div>
+</div>
+
+</body>
+</html>
+

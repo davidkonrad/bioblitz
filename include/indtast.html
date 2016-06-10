@@ -1,0 +1,342 @@
+  <span id="fund-left">
+  <h2 id="h2-indtastning">Indtastning af fund</h2>
+  <form class="form-horizontal" id="fund-form" autocomplete="on">
+	<input type="hidden" name="update-fund-id" id="update-fund-id" value="">
+	<input type="hidden" name="event_id" id="event_id">
+	<input type="hidden" name="artsgruppe" id="artsgruppe">
+    <div class="control-group" style="margin-bottom:15px;">
+	 <label class="control-label">&nbsp;</label>
+	 <div class="controls">
+		<em style="line-height:20px;" data-toggle="popover" manual="allearter"><small>Opslag på allearter.dk</small></em><br>
+	 </div>
+     <label class="control-label" for="taxon" data-toggle="popover" manual="videnskabeligtnavn">Videnskabeligt navn</label>
+     <div class="controls">
+      <input type="text" id="taxon" name="taxon" class="input-xlarge" placeholder="Videnskabeligt navn (taxon)" data-provide="typeahead"><span class="star">&#1645;</span>
+     </div>
+     <label class="control-label" for="dknavn" data-toggle="popover" manual="dansknavn">Dansk navn</label>
+     <div class="controls">
+      <input type="text" id="dknavn" name="dknavn" class="input-xlarge" placeholder="Dansk navn" data-provide="typeahead">
+     </div>
+	
+     <div class="controls">
+     <label class="checkbox" for="endeligt_bestemt" data-toggle="popover" manual="endeligtbestemt">
+  	   <input type="checkbox" id="endeligt_bestemt" name="endeligt_bestemt" checked="checked">Endeligt bedømt
+     </label>
+     </div>
+
+   </div>
+
+<!-- -->
+   <div class="control-group" id="manuelt" style="display:none;">
+    <label class="control-label" for="rige_dk">Rige</label>
+    <div class="controls">
+      <input type="text" id="rige_dk" class="error" name="rige_dk" placeholder="Rige" data-provide="typeahead">
+    </div>
+    <label class="control-label" for="artsgruppe_dk">Artsgruppe</label>
+    <div class="controls">
+      <input type="text" id="artsgruppe_dk" name="artsgruppe_dk" placeholder="Artsgruppe" data-provide="typeahead">
+    </div>
+   </div>
+<!-- -->
+
+   <div class="control-group">
+    <label class="control-label" for="finder_gruppe">Finder gruppe</label>
+    <div class="controls">
+      <input type="text" id="finder_gruppe" class="error" name="finder_gruppe" placeholder="Gruppens navn" data-provide="typeahead"><!--<span class="star">&#1645;</span>-->
+    </div>
+    <label class="control-label" for="finder_hold">Finder hold</label>
+    <div class="controls">
+      <input type="text" id="finder_hold" name="finder_hold" placeholder="Holdets navn" data-provide="typeahead"><!-- <span class="star">&#1645;</span> -->
+    </div>
+    <label class="control-label" for="finder_navn">Finders navn</label>
+    <div class="controls">
+      <input type="text" id="finder_navn" name="finder_navn" class="input-xlarge" placeholder="Finders navn" data-provide="typeahead">
+    </div>
+   </div>
+	
+   <div class="control-group">
+    <label class="control-label" for="bestemmer">Bestemmer</label>
+    <div class="controls">
+      <input type="text" id="bestemmer" name="bestemmer" placeholder="Bestemmer"><span class="star">&#1645;</span>
+    </div>
+   </div>
+
+   <div class="control-group">
+    <label class="control-label" for="lat" data-toggle="popover" manual="latlng">Latitude</label>
+    <div class="controls">
+      <input type="text" id="lat" name="lat" class="input-medium" placeholder="Latitude" 10542015readonly="readonly"><span class="star">&#1645;</span>
+    </div>
+    <label class="control-label" for="long" data-toggle="popover" manual="latlng">Longitude</label>
+    <div class="controls">
+      <input type="text" id="long" name="long" class="input-medium" placeholder="Longitude" 10042015readonly="readonly"><span class="star">&#1645;</span>
+   </div>
+   </div>
+
+   <div class="control-group">
+    <label class="control-label" for="indtaster">Indtaster</label>
+    <div class="controls">
+      <input type="text" id="indtaster" name="indtaster" placeholder="Indtaster"><span class="star">&#1645;</span>
+    </div>
+    <label class="control-label" for="noter" style="font-size:60%;" data-toggle="popover" manual="noter">Evt. noter</label>
+    <div class="controls">
+	  <textarea class="input-xlarge"  style="font-size:60%;line-height:90%;" id="noter" name="noter" rows="1"></textarea>
+    </div>
+   </div>
+
+   <div class="control-group">
+    <label class="control-label">&nbsp;</label>
+    <div class="controls">
+		<a id="btn-save" class="btn btn-success"><i class="icon-ok icon-white"></i>&nbsp;Gem fund</a>
+		<a id="btn-new" class="btn btn-primary"><i class="icon-refresh icon-white"></i>&nbsp;Nyt fund</a>
+    </div>
+   </div>
+
+</form>
+</span>
+<span id="fund-right">
+  <div id="fund-map"></div>
+</span>
+
+<script type="text/javascript">
+function updateRige(taxon) {
+	var url='proxy.php?url=http://allearter-databasen.dk/api/?get=rige&query='+taxon;
+	$.ajax({
+		url: url,
+		dataType: 'json',
+		success : function(json) {
+			$("#rige_dk").val(json.allearter[0].Rige_dk);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			alert('updateRige error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+		}
+	});
+}
+
+function updateArtsgrupper(taxon) {
+	taxon=taxon.replace(' ','XXX');
+	var url='proxy.php?url=http://allearter-databasen.dk/ajax/bioblitz_artsgrupper.php';
+	url+='?taxon='+taxon;
+	$.ajax({
+		url: url,
+		dataType: 'json',
+		success : function(json) {
+			$("#artsgruppe").val(json.Artsgruppe);
+			$("#artsgruppe_dk").val(json.Artsgruppe_dk);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			alert('updateArtsgrupper error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+		}
+	});
+}
+
+function updateTaxon(value, scope) {
+	value=value.replace(/ /g,'XXX');
+	value=encodeURIComponent(value);
+	var url='proxy.php?url=http://allearter-databasen.dk/ajax/bioblitz.php';
+	url+='?opposit='+value;
+	url+='&scope='+scope;
+	$.ajax({
+		url: url,
+		dataType : 'json',
+		success : function(json) {
+			console.log(json);
+			switch (scope) {
+				case 't' : $("#dknavn").val(decodeURIComponent(escape(json.name)));
+					break;
+				case 'd' : $("#taxon").val(json.name);
+					break;
+				default :
+					break;
+			}
+			var taxon=$("#taxon").val();
+			updateArtsgrupper(taxon);
+			updateRige(taxon);
+			Blitz.checkInput();
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			alert('updateTaxon error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+		}
+	});
+}
+
+$(document).ready(function() {
+	Blitz.initMap();
+
+	//10.04.2015 science night >>>>
+	$("#lat, #long").on('blur', function() {
+		var lat = $("#lat").val(),
+			lng = $("#long").val();
+		if (lat!='' && lng!='') {
+			var newLatLng = new google.maps.LatLng(lat, lng);
+			Blitz.marker.setPosition(newLatLng);
+			Blitz.map.setCenter(newLatLng);
+		}
+	});
+	//10.04.2015 science night <<<<
+
+	$("#event_id").val(Blitz.event_id);
+	$("#indtaster").val(Blitz.user_name);
+
+	$("#btn-save").click(function() {
+		if ($(this).hasClass('disabled')) return;
+		Blitz.saveFund();
+	});
+	$("#btn-new").click(function() {
+		Blitz.newFund();
+	});
+
+	Blitz.checkInput();
+
+	$("#endeligt_bestemt").click(function() {
+		if ($("#endeligt_bestemt").is(':checked')) {
+			$("#manuelt").hide();
+		} else {
+			$("#manuelt").show();
+		}
+	});
+
+	var allearter='proxy.php?url=http://allearter-databasen.dk/ajax/bioblitz.php';
+	$("#taxon").typeahead({
+		items : 20,
+		source: function (query, process) {
+			return $.get(allearter+'?scope=t&query='+query.replace(' ','XXX'), {}, function (data) {
+				return process(data.options);
+			});
+		},
+		updater: function(item) {
+			updateTaxon(item, 't');
+			return item;
+		}
+    });
+	$("#dknavn").typeahead({
+		items : 20,
+		source: function (query, process) {
+			return $.get(allearter+'?scope=d&query='+encodeURIComponent(query.replace(' ','XXX')), {}, function (data) {
+				return process(data.options);
+			});
+		},
+		updater: function(item) {
+			updateTaxon(item, 'd');
+			return item;
+		}
+    });
+	var lookup='ajax/fund_lookup.php?event_id='+Blitz.event_id;
+	$("#finder_hold").typeahead({
+		items : 20,
+		source: function (query, process) {
+			return $.get(lookup+'&lookup=hold&find='+encodeURIComponent(query), {}, function (data) {
+				return process(data.options);
+			});
+		}
+    });
+	$("#finder_navn").typeahead({
+		items : 20,
+		source: function (query, process) {
+			return $.get(lookup+'&lookup=navn&find='+query, {}, function (data) {
+				return process(data.options);
+			});
+		}
+    });
+	$("#finder_gruppe").typeahead({
+		items : 20,
+		source: function (query, process) {
+			return $.get(lookup+'&lookup=gruppe&find='+query, {}, function (data) {
+				return process(data.options);
+			});
+		}
+    });
+	$("#bestemmer").typeahead({
+		items : 20,
+		source: function (query, process) {
+			return $.get(lookup+'&lookup=bestemmer&find='+query, {}, function (data) {
+				return process(data.options);
+			});
+		}
+    });
+	$("#indtaster").typeahead({
+		items : 20,
+		source: function (query, process) {
+			return $.get(lookup+'&lookup=indtaster&find='+query, {}, function (data) {
+				return process(data.options);
+			});
+		}
+    });
+	
+	$("#taxon").focusout(function() {
+		if ($("#taxon").val()=='') {
+			window.Blitz.checkInput();
+			return;
+		}
+		var url='proxy.php?url=http://allearter-databasen.dk/api/?get=art&query='+$("#taxon").val();
+		$.ajax({
+			url : url,
+			dataType: 'json',
+			success : function(json) {
+				if (!json.allearter[0].hasOwnProperty('Videnskabeligt_navn')) {
+					window.document.getElementById('endeligt_bestemt').checked = false;
+					window.Blitz.checkInput();
+				} else {
+					window.document.getElementById('endeligt_bestemt').checked = true;
+					window.Blitz.checkInput();
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert('error xxx : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+			}
+		});
+	});
+
+	//
+	var artsgrupper = 'proxy.php?url=http://allearter-databasen.dk/ajax/bioblitz_artsgrupper.php?lookup=';
+	$("#artsgruppe_dk").typeahead({
+		items : 20,
+		source: function (query, process) {
+			return $.get(artsgrupper+'&query', {}, function (data) {
+				return process(data.options);
+			});
+		},
+		updater: function(item) {
+			updateRigeByArtsgruppe(item);
+			return item;
+		}
+	});
+	var riger = 'proxy.php?url=http://allearter-databasen.dk/ajax/bioblitz_rige.php?lookup=';
+	$("#rige_dk").typeahead({
+		items : 20,
+		source: function (query, process) {
+			return $.get(riger+'&query', {}, function (data) {
+				return process(data.options);
+			});
+		}
+	});
+	function updateRigeByArtsgruppe(artsgruppe) {
+		$.ajax({
+			url: 'proxy.php?url=http://allearter-databasen.dk/ajax/bioblitz_rige.php?lookup='+artsgruppe,
+			success : function(json) {
+				$("#rige_dk").val(json.options[0]);
+			}
+		});
+	}
+
+	//manual opslag
+	$.ajax({
+		dataType: "html",
+		//cache : false,
+		url : 'manual/indtastning.html?ver=2014',
+		success : function(html) {
+			$('[data-toggle="popover"]').each(function() {
+				var manual = $(this).attr('manual');
+				var div = $('<div>');
+				div.html(html);
+				var content = div.find('#'+manual);
+				$(this).attr('data-content', content.html());
+				$(this).popover({
+					trigger: 'hover',
+					placement: 'left'
+				});
+			});
+		}
+	});
+	
+});
+</script>
