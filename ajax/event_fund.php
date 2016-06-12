@@ -11,12 +11,19 @@ class EventFund extends Base {
 			case 'get' : 
 				$this->getFund();
 				break;
+
 			case 'update' : 
 				$this->updateFund();
 				break;
+
 			case 'create' : 
 				$this->createFund();
 				break;
+
+			case 'delete' : 
+				$this->deleteFund();
+				break;
+
 			default :
 				break;
 		}
@@ -138,9 +145,16 @@ class EventFund extends Base {
 			
 			'where LNR="'.$LNR.'"';
 	
-		//echo $SQL;
 		$this->exec($SQL);
 		echo (mysql_error()!='') ? mysql_error() : '1'; //need to return a number
+	}
+
+	protected function deleteFund() {
+		$LNR=$this->getParam('LNR');
+		$SQL='delete from event_fund where LNR='.$LNR;
+		$this->exec($SQL);
+		echo (mysql_error()!='') ? mysql_error() : '1'; //need to return a number
+
 	}
 
 }

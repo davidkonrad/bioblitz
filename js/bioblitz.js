@@ -618,8 +618,8 @@ var Blitz = {
 				$("#table-soeg > tbody").empty();
 				for (var i=0;i<json.soeg.length;i++) {
 					var soeg=json.soeg[i];
-					var click=' onclick="Blitz.showFund(&quot;'+soeg.LNR+'&quot;);" title="Klik for at se alle oplysninger om fundet"';
-					var tr='<tr>';
+					var click=' onclick="Blitz.showFund(&quot;'+soeg.LNR+'&quot;);" ';
+					var tr='<tr title="Klik for at se alle oplysninger om fundet">';
 					if (Blitz.user_name!='') {
 						tr+='<td><i class="i-link icon-camera icon-2x" title="Tilføj webcam-billede til fund" onclick="Blitz.initWebcam(&quot;'+soeg.LNR+'&quot;);"></td>';
 						tr+='<td><i class="i-link icon-edit icon-2x" title="Rediger fund" onclick="Blitz.editFund(&quot;'+soeg.LNR+'&quot;);" ></td>';
@@ -628,7 +628,7 @@ var Blitz = {
 					var ok=(soeg.endeligt_bestemt==1) ? '<i class="i-link icon-ok icon-2x"></i>' : '';
 					tr+='<td'+click+'>'+ok+'</td>';
 					tr+='<td'+click+'>'+soeg.LNR+'</td>';
-					tr+='<td'+click+'>'+soeg.taxon+'</td>';
+					tr+='<td'+click+' style="max-width:200px;overflow-x:hidden;text-overflow:ellipsis;" title="'+soeg.taxon+'">'+soeg.taxon+'</td>';
 					tr+='<td'+click+'>'+soeg.artsgruppe_dk+'</td>';
 					tr+='<td'+click+'>'+soeg.dknavn+'</td>';
 					tr+='<td'+click+'>'+soeg.finder_navn+'</td>';
@@ -640,6 +640,11 @@ var Blitz = {
 					}
 					tr+='<td'+click+'>'+soeg.indtaster+'</td>';
 					tr+='<td>'+soeg._timestamp+'</td>';
+
+					tr+= (User.isEventUser() || User.isSuperUser()) 
+						?  '<td><button class="btn btn-mini btn-danger btn-fund-delete" LNR="'+soeg.LNR+'" type="button" style="font-weight:bold;" title="Slet fund">&times;</button></td>'
+						: '<td></td>'
+
 					tr+='</tr>';
 					$('#table-soeg tbody').append(tr);
 				}
@@ -769,6 +774,20 @@ $(document).ready(function() {
 			});
 		}
 	});
+
+	//delete fund, 12062016
+	$('body').on('click', '.btn-fund-delete', function() {
+		var LNR = $(this).attr('LNR')
+		if (confirm('Dette vil slette fundet permanent - er du sikker på du vil fortsætte?')) {
+			$.ajax({
+				url: 'ajax/event_fund.php?action=delete&LNR='+LNR,
+				success: function(msg) {
+					Blitz.soeg()
+				}
+			})
+		}
+	})
+
 
 });
 

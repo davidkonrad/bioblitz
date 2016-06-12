@@ -28,6 +28,13 @@ update event_fund set bestemmer = replace(bestemmer, 'Ã˜', 'Ø');
 update event_fund set bestemmer = replace(bestemmer, 'ï¿½?', 'Å');
 update event_fund set bestemmer = replace(bestemmer, 'Ã…', 'Å');
 
+update event_fund set Artsgruppe_dk = replace(Artsgruppe_dk, 'Ã¦', 'æ');
+update event_fund set Artsgruppe_dk = replace(Artsgruppe_dk, 'Ã˜', 'Ø');
+update event_fund set Artsgruppe_dk = replace(Artsgruppe_dk, 'Ã¥', 'å');
+update event_fund set Artsgruppe_dk = replace(Artsgruppe_dk, 'Ã…', 'Å');
+update event_fund set Artsgruppe_dk = replace(Artsgruppe_dk, 'ÃƒÂ¦', 'æ');
 
-select distinct dknavn, taxon from event_fund where dknavn<>''
-select distinct finder_gruppe from event_fund
+
+select distinct Artsgruppe_dk from event_fund
+
+
