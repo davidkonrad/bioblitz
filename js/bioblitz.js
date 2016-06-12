@@ -302,7 +302,6 @@ var Blitz = {
 	
 	populateEvents : function() {
 		var scope = (User.isEventAdmin() || User.isSuperUser()) ? '?scope=all' : '?scope=reduced';
-		//console.log(scope);
 		$.ajax({
 			url: 'ajax/eventlist.php'+scope,
 			dataType: 'json',
@@ -329,7 +328,6 @@ var Blitz = {
 		var url='ajax/event_fund.php?'+params;
 		var endeligt_bestemt = ($("#endeligt_bestemt").is(':checked')) ? 1 : 0;
 		url+='&endeligt_bestemt='+endeligt_bestemt;
-		//console.log(url);
 		$.ajax({
 			url: url,
 			success : function(html) {
@@ -582,12 +580,11 @@ var Blitz = {
 				}
 
 				if (json.endeligt_bestemt==1) {
-					var url='proxy.php?url=http://allearter-databasen.dk/api/?get=art&query='+json.taxon;
+					var url='http://allearter-databasen.dk/api/?get=art&query='+json.taxon;					
 					$.ajax({
 						url : url,
 						dataType: 'json',
 						success : function(json) {
-							//console.log(json);
 							if (json.allearter[0].Billede!='') {
 								var img='<img src="'+json.allearter[0].Billede+'" style="width:400px;">';
 								$("#type-billede").append(img);
@@ -697,7 +694,6 @@ var Blitz = {
 
 	setManual : function(manual) {
 		this.setSection(SECTION_MANUAL);
-		//console.log(manual);
 		switch (manual) {
 			case 'Indtastning' : 
 				$(SECTION_MANUAL).load('manual/indtastning.html?ver=123');
@@ -765,15 +761,41 @@ $(document).ready(function() {
 		var code = (e.keyCode ? e.keyCode : e.which);
 		if (code == 13)	Blitz.soeg();
 	});
-	var artsgrupper = 'proxy.php?url=http://allearter-databasen.dk/ajax/bioblitz_artsgrupper.php?lookup=';
-	$("#soeg-artsgruppe_dk").typeahead({
-		items : 20,
-		source: function (query, process) {
-			return $.get(artsgrupper+'&query', {}, function (data) {
-				return process(data.options);
-			});
+
+	//look artsgrupper up once
+	$.ajax({
+		url: 'http://allearter-databasen.dk/api/?get=artsgrupper&query=',
+		success: function(json) {
+			var artsgrupper = []
+			json.allearter.forEach(function(item) { 
+				if (!~artsgrupper.indexOf(item.Artsgruppe_dk)) artsgrupper.push(item.Artsgruppe_dk)
+			})
+			$("#soeg-artsgruppe_dk").typeahead({
+				items : 20,
+				source: artsgrupper
+			})
 		}
 	});
+
+	$("#soeg-taxon").typeahead({
+		items : 20,
+		source: function (query, process) {
+			var url='http://allearter-databasen.dk/api/?get=arter&type=lat&&query='+encodeURIComponent(query);
+			return $.get(url, {}, function(data) {
+				return process(data.allearter.map(function(item) { return item.Videnskabeligt_navn }));
+			})
+		}
+  });
+
+	$("#soeg-dknavn").typeahead({
+		items : 20,
+		source: function (query, process) {
+			var url='http://allearter-databasen.dk/api/?get=arter&type=dk&query='+encodeURIComponent(query);
+			return $.get(url, {}, function(data) {
+				return process(data.allearter.map(function(item) { return item.Dansk_navn }));
+			})
+		}
+  });
 
 	//delete fund, 12062016
 	$('body').on('click', '.btn-fund-delete', function() {

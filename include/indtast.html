@@ -254,37 +254,37 @@ $(document).ready(function() {
 		})
 	});
 
-	$("#artsgruppe_dk").typeahead({
-		items : 20,
-		source: function (query, process) {
-			var url='http://allearter-databasen.dk/api/?get=artsgrupper&query='+encodeURIComponent(query)
-			return $.get(url, {}, function(data) {
-				return process(data.allearter.map(function(item) { return item.Artsgruppe_dk }));
-			});
-		},
-		updater: function(item) {
-			updateRigeByArtsgruppe(item);
-			return item;
+	//load artsgrupper once
+	var artsgrupper = [];
+	function getArtsguppeByName(artsgruppe_dk) {
+		for (var i=0; i<artsgrupper.length; i++) {
+			if (artsgrupper[i].Artsgruppe_dk = artsgruppe_dk) return artsgrupper[i]
 		}
-	});
-
-	var riger = 'proxy.php?url=http://allearter-databasen.dk/ajax/bioblitz_rige.php?lookup=';
-	$("#rige_dk").typeahead({
-		items : 20,
-		source: function (query, process) {
-			return $.get(riger+'&query', {}, function (data) {
-				return process(data.options);
-			});
-		}
-	});
-	function updateRigeByArtsgruppe(artsgruppe) {
-		$.ajax({
-			url: 'proxy.php?url=http://allearter-databasen.dk/ajax/bioblitz_rige.php?lookup='+artsgruppe,
-			success : function(json) {
-				$("#rige_dk").val(json.options[0]);
-			}
-		});
 	}
+	$.ajax({
+		url: 'http://allearter-databasen.dk/api/?get=artsgrupper&query=',
+		success: function(json) {
+			artsgrupper = json.allearter
+			var items = [], riger = [];
+			json.allearter.forEach(function(item) { 
+				if (!~items.indexOf(item.Artsgruppe_dk)) items.push(item.Artsgruppe_dk)
+				if (!~riger.indexOf(item.Rige_dk)) riger.push(item.Rige_dk)
+			}) 
+			$("#artsgruppe_dk").typeahead({
+				items : 20,
+				source: items,
+				updater: function(item) {
+					var a = getArtsguppeByName(item)
+					$("#rige_dk").val(a.Rige_dk)
+					return item;
+				}
+			})
+			$("#rige_dk").typeahead({
+				items : 20,
+				source: riger
+			})
+		}
+	});
 
 	//manual opslag
 	$.ajax({
