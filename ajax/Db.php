@@ -19,7 +19,7 @@ class Db {
 			$this->database = 'blitz';
 			$this->hostname = 'localhost';
 			$this->username = 'root';
-			$this->password = 'zoo'; 
+			$this->password = 'dadk'; 
 		} else {
 			$this->database = 'blitz';
 			$this->hostname = 'localhost';

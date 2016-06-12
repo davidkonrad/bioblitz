@@ -1,0 +1,33 @@
+
+Ã¦	æ
+Ã†	Æ
+Ã¥	å
+Ã¸	ø
+Ã˜	Ø
+ÃƒÂ¦	æ
+ÃƒÂ¥	å
+update event_fund set dknavn = replace(dknavn, 'Ã¦', 'æ');
+update event_fund set dknavn = replace(dknavn, 'Ã†', 'Æ');
+update event_fund set dknavn = replace(dknavn, 'Ã¥', 'å');
+update event_fund set dknavn = replace(dknavn, 'ÃƒÆ’Ã¢â‚¬Â¦', 'Å');
+
+update event_fund set finder_hold = replace(finder_hold, 'Ã¸', 'ø');
+update event_fund set finder_hold = replace(finder_hold, 'ÃƒÂ¦', 'æ');
+update event_fund set finder_hold = replace(finder_hold, 'Ã˜', 'Ø');
+update event_fund set finder_hold = replace(finder_hold, 'ÃƒÂ¥', 'å');
+
+update event_fund set indtaster = replace(indtaster, 'Ã¸', 'ø');
+update event_fund set indtaster = replace(indtaster, 'Ã¦', 'æ');
+
+update event_fund set finder_gruppe = replace(finder_gruppe, 'Ã¸', 'ø');
+update event_fund set finder_gruppe = replace(finder_gruppe, 'Ã˜', 'Ø');
+update event_fund set finder_gruppe = replace(finder_gruppe, 'Ã¦', 'æ');
+update event_fund set finder_gruppe = replace(finder_gruppe, 'ï¿½?', 'Ø');
+
+update event_fund set bestemmer = replace(bestemmer, 'Ã˜', 'Ø');
+update event_fund set bestemmer = replace(bestemmer, 'ï¿½?', 'Å');
+update event_fund set bestemmer = replace(bestemmer, 'Ã…', 'Å');
+
+
+select distinct dknavn, taxon from event_fund where dknavn<>''
+select distinct finder_gruppe from event_fund

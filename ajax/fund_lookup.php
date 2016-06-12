@@ -42,8 +42,6 @@ class Lookup extends Base {
 	}
 
 	protected function lookup($field, $find, $event_id) {
-		//$find=utf8_decode($find);
-
 		$SQL='select distinct '.$field.' from event_fund '.
 			'where '.$field.' like "%'.$find.'%" '.
 			'and event_id='.$event_id;
@@ -52,14 +50,12 @@ class Lookup extends Base {
 
 		$result=mysql_query($SQL);
 
-		$JSON='';
+		$json = [];
 		while ($row = mysql_fetch_assoc($result)) {
-			if ($JSON!='') $JSON.=', ';
-			//$JSON.='"'.utf8_decode($row[$field]).'"';
-			$JSON.='"'.$row[$field].'"';
+			$json[] = $row[$field];
 		}
-		$JSON='{ "options" : ['.$JSON.'] }';
-		echo $JSON;
+		$json = array('options' => $json);
+		echo json_encode($json);
 	}
 }
 

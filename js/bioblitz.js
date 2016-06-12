@@ -62,11 +62,6 @@ var Blitz = {
 					break;
 			
 				default : 
-					/*
-					21.05.2014
-					this.setLastPage(); 
-					break;
-					*/
 					this.setFrontpage(); 
 					$("#nav-forside").addClass('active');
 					break;
@@ -139,8 +134,6 @@ var Blitz = {
 				User.updatePermissions();
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				//console.log(jqXHR.responseText);
-				//console.log(jqXHR, textStatus, errorThrown);
 				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
 			}
 		});				
@@ -309,7 +302,7 @@ var Blitz = {
 	
 	populateEvents : function() {
 		var scope = (User.isEventAdmin() || User.isSuperUser()) ? '?scope=all' : '?scope=reduced';
-		console.log(scope);
+		//console.log(scope);
 		$.ajax({
 			url: 'ajax/eventlist.php'+scope,
 			dataType: 'json',
@@ -336,7 +329,7 @@ var Blitz = {
 		var url='ajax/event_fund.php?'+params;
 		var endeligt_bestemt = ($("#endeligt_bestemt").is(':checked')) ? 1 : 0;
 		url+='&endeligt_bestemt='+endeligt_bestemt;
-		console.log(url);
+		//console.log(url);
 		$.ajax({
 			url: url,
 			success : function(html) {
@@ -451,10 +444,6 @@ var Blitz = {
 					tr+='<td>'+fund.artsgruppe_dk+'</td>';
 					tr+='<td>'+fund._timestamp+'</td>';
 					tr+='<td class="center">'+fund.count+'</td>';
-
-					//13.06.2014
-					//var finder_navn=Blitz.createFinderNavn(fund);
-
 					tr+='<td>'+fund.finder_navn+'</td>';
 					tr+='<td>'+fund.finder_hold+'</td>';
 					tr+='<td>'+fund.finder_gruppe+'</td>';
@@ -703,7 +692,7 @@ var Blitz = {
 
 	setManual : function(manual) {
 		this.setSection(SECTION_MANUAL);
-		console.log(manual);
+		//console.log(manual);
 		switch (manual) {
 			case 'Indtastning' : 
 				$(SECTION_MANUAL).load('manual/indtastning.html?ver=123');

@@ -40,7 +40,6 @@ td.caption {
 	white-space : nowrap;
 }
 
-
 #fund-left {
 	width: 520px;
 	float: left;
@@ -53,7 +52,8 @@ td.caption {
 #fund-map {
 	width: 550px;
 	height: 550px;
-	border: 3px solid silver;
+	border: 3px outset silver;
+	border-radius: 5px !important;
 }
 #msg {
 	position: absolute;

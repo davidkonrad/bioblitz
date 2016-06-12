@@ -11,11 +11,11 @@
 	 </div>
      <label class="control-label" for="taxon" data-toggle="popover" manual="videnskabeligtnavn">Videnskabeligt navn</label>
      <div class="controls">
-      <input type="text" id="taxon" name="taxon" class="input-xlarge" placeholder="Videnskabeligt navn (taxon)" data-provide="typeahead"><span class="star">&#1645;</span>
+      <input type="text" id="taxon" name="taxon" class="input-xlarge" placeholder="Videnskabeligt navn (taxon)" data-provide="typeahead" style=" font-style: italic;"><span class="star">&#1645;</span>
      </div>
      <label class="control-label" for="dknavn" data-toggle="popover" manual="dansknavn">Dansk navn</label>
      <div class="controls">
-      <input type="text" id="dknavn" name="dknavn" class="input-xlarge" placeholder="Dansk navn" data-provide="typeahead">
+      <input type="text" id="dknavn" name="dknavn" class="input-xlarge" placeholder="Dansk navn" data-provide="typeahead" style="margin-top:2px;">
      </div>
 	
      <div class="controls">
@@ -98,65 +98,19 @@
 </span>
 
 <script type="text/javascript">
-function updateRige(taxon) {
-	var url='proxy.php?url=http://allearter-databasen.dk/api/?get=rige&query='+taxon;
-	$.ajax({
-		url: url,
-		dataType: 'json',
-		success : function(json) {
-			$("#rige_dk").val(json.allearter[0].Rige_dk);
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-			alert('updateRige error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
-		}
-	});
-}
 
-function updateArtsgrupper(taxon) {
-	taxon=taxon.replace(' ','XXX');
-	var url='proxy.php?url=http://allearter-databasen.dk/ajax/bioblitz_artsgrupper.php';
-	url+='?taxon='+taxon;
+function updateTaxon(taxon) {
+	$("#dknavn").val(taxon.Dansk_navn)
+	$("#taxon").val(taxon.Videnskabeligt_navn)
 	$.ajax({
-		url: url,
-		dataType: 'json',
-		success : function(json) {
-			$("#artsgruppe").val(json.Artsgruppe);
-			$("#artsgruppe_dk").val(json.Artsgruppe_dk);
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-			alert('updateArtsgrupper error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
-		}
-	});
-}
-
-function updateTaxon(value, scope) {
-	value=value.replace(/ /g,'XXX');
-	value=encodeURIComponent(value);
-	var url='proxy.php?url=http://allearter-databasen.dk/ajax/bioblitz.php';
-	url+='?opposit='+value;
-	url+='&scope='+scope;
-	$.ajax({
-		url: url,
-		dataType : 'json',
-		success : function(json) {
-			console.log(json);
-			switch (scope) {
-				case 't' : $("#dknavn").val(decodeURIComponent(escape(json.name)));
-					break;
-				case 'd' : $("#taxon").val(json.name);
-					break;
-				default :
-					break;
-			}
-			var taxon=$("#taxon").val();
-			updateArtsgrupper(taxon);
-			updateRige(taxon);
+		url: 'http://allearter-databasen.dk/api/?get=art&query='+encodeURIComponent(taxon.Videnskabeligt_navn),
+		success: function(json) {
+			$("#rige_dk").val(json.allearter[0].Rige_dk)
+			$("#artsgruppe").val(json.allearter[0].Artsgruppe)
+			$("#artsgruppe_dk").val(json.allearter[0].Artsgruppe_dk)
 			Blitz.checkInput();
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-			alert('updateTaxon error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
 		}
-	});
+	})
 }
 
 $(document).ready(function() {
@@ -195,31 +149,48 @@ $(document).ready(function() {
 		}
 	});
 
-	var allearter='proxy.php?url=http://allearter-databasen.dk/ajax/bioblitz.php';
+	var lastLookup = [];
+	function itemByDk(Dansk_navn) {
+		for (var i=0;i<lastLookup.length; i++) {
+			if (lastLookup[i].Dansk_navn == Dansk_navn) return lastLookup[i]
+		}
+	}
+	function itemByVn(Videnskabeligt_navn) {
+		for (var i=0;i<lastLookup.length; i++) {
+			if (lastLookup[i].Videnskabeligt_navn == Videnskabeligt_navn) return lastLookup[i]
+		}
+	}
+
 	$("#taxon").typeahead({
 		items : 20,
 		source: function (query, process) {
-			return $.get(allearter+'?scope=t&query='+query.replace(' ','XXX'), {}, function (data) {
-				return process(data.options);
-			});
+			var url='http://allearter-databasen.dk/api/?get=arter&type=lat&&query='+encodeURIComponent(query);
+			return $.get(url, {}, function(data) {
+				lastLookup = data.allearter
+				return process(data.allearter.map(function(item) { return item.Videnskabeligt_navn }));
+			})
 		},
 		updater: function(item) {
-			updateTaxon(item, 't');
-			return item;
+			updateTaxon(itemByVn(item))
+			return item
 		}
-    });
+  });
+
 	$("#dknavn").typeahead({
 		items : 20,
 		source: function (query, process) {
-			return $.get(allearter+'?scope=d&query='+encodeURIComponent(query.replace(' ','XXX')), {}, function (data) {
-				return process(data.options);
-			});
+			var url='http://allearter-databasen.dk/api/?get=arter&type=dk&query='+encodeURIComponent(query);
+			return $.get(url, {}, function(data) {
+				lastLookup = data.allearter
+				return process(data.allearter.map(function(item) { return item.Dansk_navn }));
+			})
 		},
 		updater: function(item) {
-			updateTaxon(item, 'd');
-			return item;
+			updateTaxon(itemByDk(item))
+			return item
 		}
-    });
+  });
+
 	var lookup='ajax/fund_lookup.php?event_id='+Blitz.event_id;
 	$("#finder_hold").typeahead({
 		items : 20,
@@ -262,37 +233,33 @@ $(document).ready(function() {
 		}
     });
 	
+	//check if art really exists
 	$("#taxon").focusout(function() {
-		if ($("#taxon").val()=='') {
+		var taxon = $("#taxon").val()
+		if (taxon == '') {
 			window.Blitz.checkInput();
 			return;
 		}
-		var url='proxy.php?url=http://allearter-databasen.dk/api/?get=art&query='+$("#taxon").val();
 		$.ajax({
-			url : url,
-			dataType: 'json',
-			success : function(json) {
-				if (!json.allearter[0].hasOwnProperty('Videnskabeligt_navn')) {
-					window.document.getElementById('endeligt_bestemt').checked = false;
-					window.Blitz.checkInput();
-				} else {
+			url: 'http://allearter-databasen.dk/api/?get=art&query='+encodeURIComponent(taxon),
+			success: function(json) {
+				if (json.allearter[0].Videnskabeligt_navn && json.allearter[0].Videnskabeligt_navn == taxon) {
 					window.document.getElementById('endeligt_bestemt').checked = true;
 					window.Blitz.checkInput();
+				} else {
+					window.document.getElementById('endeligt_bestemt').checked = false;
+					window.Blitz.checkInput();
 				}
-			},
-			error: function(jqXHR, textStatus, errorThrown) {
-				alert('error xxx : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
 			}
-		});
+		})
 	});
 
-	//
-	var artsgrupper = 'proxy.php?url=http://allearter-databasen.dk/ajax/bioblitz_artsgrupper.php?lookup=';
 	$("#artsgruppe_dk").typeahead({
 		items : 20,
 		source: function (query, process) {
-			return $.get(artsgrupper+'&query', {}, function (data) {
-				return process(data.options);
+			var url='http://allearter-databasen.dk/api/?get=artsgrupper&query='+encodeURIComponent(query)
+			return $.get(url, {}, function(data) {
+				return process(data.allearter.map(function(item) { return item.Artsgruppe_dk }));
 			});
 		},
 		updater: function(item) {
@@ -300,6 +267,7 @@ $(document).ready(function() {
 			return item;
 		}
 	});
+
 	var riger = 'proxy.php?url=http://allearter-databasen.dk/ajax/bioblitz_rige.php?lookup=';
 	$("#rige_dk").typeahead({
 		items : 20,

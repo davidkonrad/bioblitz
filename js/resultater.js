@@ -68,42 +68,45 @@ var Res = {
 
 	initMap : function () {
 		google.maps.visualRefresh = true;
-		//console.log('initMap', window.Blitz.lat, window.Blitz.long);
 		this.map = Res.googleMap('statistik-map', window.Blitz.lat, window.Blitz.long, 16);
 		this.map.setCenter(new google.maps.LatLng(window.Blitz.lat, window.Blitz.long));
 		this.map.setMapTypeId('satellite');
 	},
 
 	googleMap : function(elem_id, lat, lng, zoom) {
-		/*
-		lat = (typeof lat==='number') ? lat : Res.DK_Lat;
-		lng = (typeof lng==='number') ? lng : Res.DK_Long;
-		*/
 		zoom = (typeof zoom=='number') ? zoom : Res.DK_Zoom;
 		var latlng = new google.maps.LatLng(lat, lng);
+
 		var stylers = [{
 			//remove "Danmark / Denmark"
 			featureType: "administrative.country",
 			elementType: 'labels',
 			stylers: [{ visibility: 'off' }]
-			},{
+		},{
 			//remove points of interest
 			featureType: "poi",
 			elementType: 'all',
 			stylers: [{ visibility: 'off' }]
-		}];
-
+		}, {
+			//remove road labels
+	    featureType: "road",
+	    elementType: "labels",
+	    stylers: [{ "visibility": "off" }]
+	  }];
+	
 		var mapOptions = {
 			zoom: zoom,
-			center: latlng, //new google.maps.LatLng(lat, lng), //latlng,
+			center: latlng,
 			zoomControl: true,
 			streetViewControl: false,
 			zoomControlOptions: {
-				style: google.maps.ZoomControlStyle.SMALL
+				style: google.maps.ZoomControlStyle.SMALL,
+        position: google.maps.ControlPosition.RIGHT_TOP
 			},
 			styles : stylers,
-			mapTypeId: 'terrain' //google.maps.MapTypeId.TERRAIN
+			mapTypeId: google.maps.MapTypeId.TERRAIN
 		}
+		//
 		var map = new google.maps.Map(document.getElementById(elem_id), mapOptions);	
 
 		if (map.keyDragZoomEnabled) {

@@ -129,7 +129,7 @@ var User = {
 	},
 
 	checkLogin : function() {
-		console.log('checkLogin');
+		//console.log('checkLogin');
 		var u = $.cookie(COOKIE_USER);
 		if ((u!='') && (u!=='undefined') && (parseInt(u)>0)) {
 			User.user_name=$.cookie(COOKIE_USERNAME);
