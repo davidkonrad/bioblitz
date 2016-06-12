@@ -3,7 +3,7 @@ var Admin = {
 
 	editEvent : function(event_id) {
 		if (CKEDITOR.instances['event-beskrivelse'] == undefined) {
-			CKEDITOR.replace('event-beskrivelse');
+			CKEDITOR.replace('event-beskrivelse', { toolbar:'bioblitz' } );
 		}
 		$("#section-frontpage").hide();
 		$("#section-edit").show();
@@ -166,7 +166,6 @@ var Admin = {
 		$.ajax({
 			url : 'ajax/users.php?action=create&username='+username+'&password='+password+'&email='+email+'&event_id='+event_id,
 			success : function(response) {
-				alert(response);
 				Admin.populateUsers(event_id);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
