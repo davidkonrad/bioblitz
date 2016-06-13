@@ -94,6 +94,8 @@ var Res = {
 	    stylers: [{ "visibility": "off" }]
 	  }];
 	
+		console.log(google.maps.MapTypeControlStyle)
+
 		var mapOptions = {
 			zoom: zoom,
 			center: latlng,
@@ -103,6 +105,10 @@ var Res = {
 				style: google.maps.ZoomControlStyle.SMALL,
         position: google.maps.ControlPosition.RIGHT_TOP
 			},
+		  mapTypeControlOptions: {
+        style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+        //position: google.maps.ControlPosition.TOP_CENTER
+	    },
 			styles : stylers,
 			mapTypeId: google.maps.MapTypeId.TERRAIN
 		}
