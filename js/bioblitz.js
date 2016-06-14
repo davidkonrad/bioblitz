@@ -134,7 +134,7 @@ var Blitz = {
 				User.updatePermissions();
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				console.log('error', jqXHR.responseText, textStatus, errorThrown);
 			}
 		});				
 	},
@@ -317,7 +317,7 @@ var Blitz = {
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				console.log('error', jqXHR.responseText, textStatus, errorThrown);
 			}
 		});
 	},
@@ -344,7 +344,7 @@ var Blitz = {
 					document.cookie = COOKIE_LAST_GRUPPE+'='+$("#finder_gruppe").val();
 				} else {
 					if (html!='') {
-						//alert(html); //mysql_error
+						console.log('error', html);
 					}
 				} 
 			}
@@ -464,7 +464,7 @@ var Blitz = {
 				$("#h2-fund").text(h2);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				console.log('error', jqXHR.responseText, textStatus, errorThrown);
 			}
 		});
 	},
@@ -503,7 +503,7 @@ var Blitz = {
 				$("#upload-fund_id").val(Blitz.current_fund);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				console.log('error', jqXHR.responseText, textStatus, errorThrown);
 			}
 		});
 		webcam.set_hook('onComplete', 'webcamCompletion');
@@ -528,10 +528,9 @@ var Blitz = {
 		$.ajax({
 			url: url,
 			success : function(msg) {
-				//alert(msg);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				alert('webcamAssocFund error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				console.log('webcamAssocFund error', jqXHR.responseText, textStatus, errorThrown);
 			}
 		});
 	},
@@ -591,13 +590,13 @@ var Blitz = {
 							}
 						},
 						error: function(jqXHR, textStatus, errorThrown) {
-							alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+							console.log('error', jqXHR.responseText, textStatus, errorThrown);
 						}
 					});
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				console.log('error', jqXHR.responseText, textStatus, errorThrown);
 			}
 
 		});
@@ -648,7 +647,7 @@ var Blitz = {
 				if (!restoring) Blitz.saveSearch();
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				console.log('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
 			}
 		});
 	},
@@ -719,7 +718,7 @@ function webcamCompletion(msg) {
 		$("#foto-msg").text(msg+' er gemt ..');
 		webcam.reset();
 	} else {
-		alert('Fejl : '+msg);
+		console.log('Fejl', msg);
 	}
 	Blitz.wait(false);
 }
