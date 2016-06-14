@@ -157,6 +157,7 @@ var User = {
 	},
 
 	isEventAdmin : function() {
+		console.log(User.status, USER_ADMIN)
 		return (User.status == USER_ADMIN);
 	},
 	

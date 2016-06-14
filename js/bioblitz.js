@@ -344,7 +344,7 @@ var Blitz = {
 					document.cookie = COOKIE_LAST_GRUPPE+'='+$("#finder_gruppe").val();
 				} else {
 					if (html!='') {
-						alert(html); //mysql_error
+						//alert(html); //mysql_error
 					}
 				} 
 			}
@@ -638,7 +638,7 @@ var Blitz = {
 					tr+='<td'+click+'>'+soeg.indtaster+'</td>';
 					tr+='<td>'+soeg._timestamp+'</td>';
 
-					tr+= (User.isEventUser() || User.isSuperUser()) 
+					tr+= (User.isEventAdmin() || User.isSuperUser()) 
 						?  '<td><button class="btn btn-mini btn-danger btn-fund-delete" LNR="'+soeg.LNR+'" type="button" style="font-weight:bold;" title="Slet fund">&times;</button></td>'
 						: '<td></td>'
 
