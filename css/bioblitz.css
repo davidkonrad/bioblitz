@@ -157,3 +157,10 @@ li.hidden {
 .modal-backdrop {
 	background-color: gray;
 }
+
+/** 13062016 */
+td.ellipsis {
+	max-width: 135px !important;
+	overflow-x: hidden;
+	text-overflow: ellipsis;
+}

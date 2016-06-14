@@ -624,17 +624,18 @@ var Blitz = {
 					var ok=(soeg.endeligt_bestemt==1) ? '<i class="i-link icon-ok icon-2x"></i>' : '';
 					tr+='<td'+click+'>'+ok+'</td>';
 					tr+='<td'+click+'>'+soeg.LNR+'</td>';
-					tr+='<td'+click+' style="max-width:200px;overflow-x:hidden;text-overflow:ellipsis;" title="'+soeg.taxon+'">'+soeg.taxon+'</td>';
+					tr+='<td'+click+' class="ellipsis" title="'+soeg.taxon+'">'+soeg.taxon+'</td>';
 					tr+='<td'+click+'>'+soeg.artsgruppe_dk+'</td>';
-					tr+='<td'+click+'>'+soeg.dknavn+'</td>';
-					tr+='<td'+click+'>'+soeg.finder_navn+'</td>';
-					tr+='<td'+click+'>'+soeg.finder_hold+'</td>';
+					tr+='<td'+click+' class="ellipsis" title="'+soeg.dknavn+'">'+soeg.dknavn+'</td>';
+					tr+='<td'+click+' class="ellipsis" title="'+soeg.finder_navn+'">'+soeg.finder_navn+'</td>';
+					tr+='<td'+click+' class="ellipsis" title="'+soeg.finder_hold+'">'+soeg.finder_hold+'</td>';
+
 					if (parseInt(soeg.billeder)>0) {
 						tr+='<td'+click+'>'+soeg.billeder+'&nbsp;<img src="ico/photo.png"></td>';
 					} else {
 						tr+='<td></td>';
 					}
-					tr+='<td'+click+'>'+soeg.indtaster+'</td>';
+					tr+='<td'+click+' class="ellipsis" title="'+soeg.indtaster+'">'+soeg.indtaster+'</td>';
 					tr+='<td>'+soeg._timestamp+'</td>';
 
 					tr+= (User.isEventAdmin() || User.isSuperUser()) 
