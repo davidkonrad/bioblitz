@@ -42,7 +42,7 @@ var Res = {
 				width: "200px"
 			}
 			,closeBoxMargin: "10px 2px 2px 2px"
-			,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
+			,closeBoxURL: "https://www.google.com/intl/en_us/mapfiles/close.gif"
 			,infoBoxClearance: new google.maps.Size(1, 1)
 			,isHidden: false
 			,pane: "floatPane"
@@ -94,7 +94,7 @@ var Res = {
 	    stylers: [{ "visibility": "off" }]
 	  }];
 	
-		console.log(google.maps.MapTypeControlStyle)
+		//console.log(google.maps.MapTypeControlStyle)
 
 		var mapOptions = {
 			zoom: zoom,
@@ -450,7 +450,7 @@ var Res = {
 			if (artsgruppe_icons[key]!=artsgruppe_default_icon) {
 				html+='<img src="'+artsgruppe_icons[key]+'">';
 				html+='&nbsp;';
-				html+=key;
+				html+='<span style="position:relative;top:-14px;">'+key+'</span>';
 				html+='<br>';
 				count++;
 				if (count>=4) {
@@ -459,7 +459,7 @@ var Res = {
 				}
 			}
 		}
-		html+='<img src="'+artsgruppe_default_icon+'">&nbsp;Øvrige';
+		html+='<img src="'+artsgruppe_default_icon+'">&nbsp;<span style="position:relative;top:-14px;">Øvrige</span>';
 		html+='</div>';
 		$('#piktogrammer').html(html);
 	},

@@ -1,0 +1,9 @@
+
+- flere brugere med samme navn (men ikke idenfor event)
+- æøå når der gemmmes
+- opslag i synonymer
+- typeahead / lookup på hold, grupper osv
+- to faneblade, "fordelt på riger (grafik) både hold og findergruppe
+- slette ubrugte events
+
+

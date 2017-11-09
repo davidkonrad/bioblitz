@@ -15,12 +15,12 @@ body {
 	padding-bottom: 40px;
 }
 </style>
-<script src="js/jquery-1.9.1.min.js"></script>
-<script src="js/webcam.js?ver=123"></script>
-<script src="js/user.js?ver=plon"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+<script src="js/webcam.js"></script>
+<script src="js/user.js"></script>
 <script src="js/admin.js"></script>
-<script src="js/bioblitz.js?ver=2014"></script>
-<script src="js/resultater.js?ver=xyz"></script>
+<script src="js/bioblitz.js?ver=xyz"></script>
+<script src="js/resultater.js"></script>
 <script src="js/artsgruppe-icons.js"></script>
 <link href="bootstrap/bootstrap-select/bootstrap-select.css" rel="stylesheet">
 <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
@@ -28,7 +28,7 @@ body {
 <script src="bootstrap/bootstrap-select/bootstrap-select.js"></script>
 <link href="css/bioblitz.css" rel="stylesheet">
 <link rel="stylesheet" href="FortAwesome-Font-Awesome/css/font-awesome.min.css">
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js??v=3.24&key=AIzaSyAOj0_u0DRE2dK8X9YptdCXtxt89UCqfoo"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js??v=3.24&key=AIzaSyAOj0_u0DRE2dK8X9YptdCXtxt89UCqfoo"></script>
 <script src="js/infobox.js"></script>
 <script src="js/keydragzoom.js"></script>
 <script src="js/jquery.cookie.js"></script>
@@ -45,12 +45,12 @@ body {
               <li id="nav-forside"><a href="index.html?goto=forside">Om Bioblitz</a></li>
 			  <li id="nav-administration" style="display:none;"><a href="admin.html">Administration</a></li>
 			  <li class="dropdown" id="nav-manual">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Vejledning <b class="caret"></b></a>
-                <ul class="dropdown-menu" id="vejledning-dropdown">
-				 <li><a href="#" onclick="Blitz.setManual('Indtastning');">Indtastning af fund</a></li>
-				 <li><a href="#" onclick="Blitz.setManual('Resultater');">Resultater</a></li>
-                </ul>
-              </li>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Vejledning <b class="caret"></b></a>
+						<ul class="dropdown-menu" id="vejledning-dropdown">
+						 <li><a href="#" onclick="Blitz.setManual('Indtastning');">Indtastning af fund</a></li>
+						 <li><a href="#" onclick="Blitz.setManual('Resultater');">Resultater</a></li>
+	          </ul>
+        </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bioblitz events <b class="caret"></b></a>
                 <ul class="dropdown-menu" id="event-dropdown">
@@ -94,7 +94,7 @@ Konceptet er meget fleksibelt, men består i grundtrækkene af, at man tager et 
 <p style="float:left;">
 Ved en BioBlitz er alle på hjemmebane; børnehaver, skoler, familier, studerende, foreninger, naturvejledere, forskere og andre naturkyndige. – Alle samarbejder om at finde det størst mulige antal arter.
 <br><br>
-Se mere om BioBlitz på <a href="www.BioBlitz.dk">www.BioBlitz.dk</a>.
+Se mere om BioBlitz på <a href="https://www.bioblitz.dk">www.BioBlitz.dk</a>.
 <br>
 <img src="img/bioblitz.jpg" style="width:100%;border:1px solid silver;">
 	  </p>
@@ -139,7 +139,7 @@ Se mere om BioBlitz på <a href="www.BioBlitz.dk">www.BioBlitz.dk</a>.
   </table>
 </div>
 
-<div class="hero-unit" id="section-soeg" style="display:none;overflow:auto;padding-right:10px;overflow-x: visible;">
+<div class="hero-unit" id="section-soeg" style="display:none;overflow:auto;padding-right:10px;">
   <h2>Søg i Fund</h2>
   <form class="form-horizontal" id="fund-soeg">
 	<table><tr><td>
@@ -309,7 +309,7 @@ webcam.set_hook('onComplete', 'webcamCompletion');
       </div>
       <hr>
       <footer id="footer">
-        <p>&copy; DANBIF 2013</p>
+        <p>&copy; DANBIF 2013-17</p>
 		<div class="footer-box">
 		<a href="http://www.danbif.dk/" target=_blank title="DanBIF - Danish Biodiversity Information Facility">
 		<img src="logo/DanBIF-logo_2generation_final.jpg" alt="DANBIF">

@@ -19,7 +19,7 @@ class EventList extends Base {
 				$SQL='select id, dato, dato_text, titel from events order by dato';
 				break;
 		}
-		mysql_set_charset('utf8');
+
 		$result=$this->query($SQL);
 		$JSON='';
 		while ($row = mysql_fetch_assoc($result)) {
@@ -34,4 +34,3 @@ class EventList extends Base {
 $eventlist = new EventList();
 
 ?>
-

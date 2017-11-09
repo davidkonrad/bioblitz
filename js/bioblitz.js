@@ -134,7 +134,7 @@ var Blitz = {
 				User.updatePermissions();
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				console.log('error', jqXHR.responseText, textStatus, errorThrown);
+				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
 			}
 		});				
 	},
@@ -247,6 +247,10 @@ var Blitz = {
 	},
 
 	initLatLong : function(lat, long) {
+		//center of dk if not defined
+		lat = lat || 56.126627523318206;
+		long = long || 11.457741782069204;
+		//console.log(lat, long);
 		$("#lat").val(lat.toString().substring(0,10));
 		$("#long").val(long.toString().substring(0,10));
 	},
@@ -317,7 +321,7 @@ var Blitz = {
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				console.log('error', jqXHR.responseText, textStatus, errorThrown);
+				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
 			}
 		});
 	},
@@ -344,7 +348,7 @@ var Blitz = {
 					document.cookie = COOKIE_LAST_GRUPPE+'='+$("#finder_gruppe").val();
 				} else {
 					if (html!='') {
-						console.log('error', html);
+						//alert(html); //mysql_error
 					}
 				} 
 			}
@@ -464,7 +468,7 @@ var Blitz = {
 				$("#h2-fund").text(h2);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				console.log('error', jqXHR.responseText, textStatus, errorThrown);
+				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
 			}
 		});
 	},
@@ -503,7 +507,7 @@ var Blitz = {
 				$("#upload-fund_id").val(Blitz.current_fund);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				console.log('error', jqXHR.responseText, textStatus, errorThrown);
+				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
 			}
 		});
 		webcam.set_hook('onComplete', 'webcamCompletion');
@@ -528,9 +532,10 @@ var Blitz = {
 		$.ajax({
 			url: url,
 			success : function(msg) {
+				//alert(msg);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				console.log('webcamAssocFund error', jqXHR.responseText, textStatus, errorThrown);
+				alert('webcamAssocFund error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
 			}
 		});
 	},
@@ -579,7 +584,7 @@ var Blitz = {
 				}
 
 				if (json.endeligt_bestemt==1) {
-					var url='http://allearter-databasen.dk/api/?get=art&query='+json.taxon;					
+					var url='https://allearter-databasen.dk/api/?get=art&query='+json.taxon;					
 					$.ajax({
 						url : url,
 						dataType: 'json',
@@ -590,13 +595,13 @@ var Blitz = {
 							}
 						},
 						error: function(jqXHR, textStatus, errorThrown) {
-							console.log('error', jqXHR.responseText, textStatus, errorThrown);
+							alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
 						}
 					});
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				console.log('error', jqXHR.responseText, textStatus, errorThrown);
+				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
 			}
 
 		});
@@ -624,18 +629,17 @@ var Blitz = {
 					var ok=(soeg.endeligt_bestemt==1) ? '<i class="i-link icon-ok icon-2x"></i>' : '';
 					tr+='<td'+click+'>'+ok+'</td>';
 					tr+='<td'+click+'>'+soeg.LNR+'</td>';
-					tr+='<td'+click+' class="ellipsis" title="'+soeg.taxon+'">'+soeg.taxon+'</td>';
+					tr+='<td'+click+' style="max-width:200px;overflow-x:hidden;text-overflow:ellipsis;" title="'+soeg.taxon+'">'+soeg.taxon+'</td>';
 					tr+='<td'+click+'>'+soeg.artsgruppe_dk+'</td>';
-					tr+='<td'+click+' class="ellipsis" title="'+soeg.dknavn+'">'+soeg.dknavn+'</td>';
-					tr+='<td'+click+' class="ellipsis" title="'+soeg.finder_navn+'">'+soeg.finder_navn+'</td>';
-					tr+='<td'+click+' class="ellipsis" title="'+soeg.finder_hold+'">'+soeg.finder_hold+'</td>';
-
+					tr+='<td'+click+'>'+soeg.dknavn+'</td>';
+					tr+='<td'+click+'>'+soeg.finder_navn+'</td>';
+					tr+='<td'+click+'>'+soeg.finder_hold+'</td>';
 					if (parseInt(soeg.billeder)>0) {
 						tr+='<td'+click+'>'+soeg.billeder+'&nbsp;<img src="ico/photo.png"></td>';
 					} else {
 						tr+='<td></td>';
 					}
-					tr+='<td'+click+' class="ellipsis" title="'+soeg.indtaster+'">'+soeg.indtaster+'</td>';
+					tr+='<td'+click+'>'+soeg.indtaster+'</td>';
 					tr+='<td>'+soeg._timestamp+'</td>';
 
 					tr+= (User.isEventAdmin() || User.isSuperUser()) 
@@ -648,7 +652,7 @@ var Blitz = {
 				if (!restoring) Blitz.saveSearch();
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				console.log('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
 			}
 		});
 	},
@@ -719,7 +723,7 @@ function webcamCompletion(msg) {
 		$("#foto-msg").text(msg+' er gemt ..');
 		webcam.reset();
 	} else {
-		console.log('Fejl', msg);
+		alert('Fejl : '+msg);
 	}
 	Blitz.wait(false);
 }
@@ -764,7 +768,7 @@ $(document).ready(function() {
 
 	//look artsgrupper up once
 	$.ajax({
-		url: 'http://allearter-databasen.dk/api/?get=artsgrupper&query=',
+		url: 'https://allearter-databasen.dk/api/?get=artsgrupper&query=',
 		success: function(json) {
 			var artsgrupper = []
 			json.allearter.forEach(function(item) { 
@@ -780,7 +784,7 @@ $(document).ready(function() {
 	$("#soeg-taxon").typeahead({
 		items : 20,
 		source: function (query, process) {
-			var url='http://allearter-databasen.dk/api/?get=arter&type=lat&&query='+encodeURIComponent(query);
+			var url='https://allearter-databasen.dk/api/?get=arter&type=lat&&query='+encodeURIComponent(query);
 			return $.get(url, {}, function(data) {
 				return process(data.allearter.map(function(item) { return item.Videnskabeligt_navn }));
 			})
@@ -790,7 +794,7 @@ $(document).ready(function() {
 	$("#soeg-dknavn").typeahead({
 		items : 20,
 		source: function (query, process) {
-			var url='http://allearter-databasen.dk/api/?get=arter&type=dk&query='+encodeURIComponent(query);
+			var url='https://allearter-databasen.dk/api/?get=arter&type=dk&query='+encodeURIComponent(query);
 			return $.get(url, {}, function(data) {
 				return process(data.allearter.map(function(item) { return item.Dansk_navn }));
 			})

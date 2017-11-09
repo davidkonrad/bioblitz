@@ -7,19 +7,19 @@
     <div class="control-group" style="margin-bottom:15px;">
 	 <label class="control-label">&nbsp;</label>
 	 <div class="controls">
-		<em style="line-height:20px;" data-toggle="popover" manual="allearter"><small>Opslag på allearter.dk</small></em><br>
+		<em style="line-height:20px;" data-toggle="popover" data-placement="top" manual="allearter"><small>Opslag på allearter.dk</small></em><br>
 	 </div>
-     <label class="control-label" for="taxon" data-toggle="popover" manual="videnskabeligtnavn">Videnskabeligt navn</label>
+     <label class="control-label" for="taxon" data-toggle="popover" data-placement="bottom" manual="videnskabeligtnavn">Videnskabeligt navn</label>
      <div class="controls">
       <input type="text" id="taxon" name="taxon" class="input-xlarge" placeholder="Videnskabeligt navn (taxon)" data-provide="typeahead" style=" font-style: italic;"><span class="star">&#1645;</span>
      </div>
-     <label class="control-label" for="dknavn" data-toggle="popover" manual="dansknavn">Dansk navn</label>
+     <label class="control-label" for="dknavn" data-toggle="popover" data-placement="bottom" manual="dansknavn">Dansk navn</label>
      <div class="controls">
       <input type="text" id="dknavn" name="dknavn" class="input-xlarge" placeholder="Dansk navn" data-provide="typeahead" style="margin-top:2px;">
      </div>
 	
      <div class="controls">
-     <label class="checkbox" for="endeligt_bestemt" data-toggle="popover" manual="endeligtbestemt">
+     <label class="checkbox" for="endeligt_bestemt" data-toggle="popover" data-placement="left" manual="endeligtbestemt">
   	   <input type="checkbox" id="endeligt_bestemt" name="endeligt_bestemt" checked="checked">Endeligt bedømt
      </label>
      </div>
@@ -103,7 +103,7 @@ function updateTaxon(taxon) {
 	$("#dknavn").val(taxon.Dansk_navn)
 	$("#taxon").val(taxon.Videnskabeligt_navn)
 	$.ajax({
-		url: 'http://allearter-databasen.dk/api/?get=art&query='+encodeURIComponent(taxon.Videnskabeligt_navn),
+		url: 'https://allearter-databasen.dk/api/?get=art&query='+encodeURIComponent(taxon.Videnskabeligt_navn),
 		success: function(json) {
 			$("#rige_dk").val(json.allearter[0].Rige_dk)
 			$("#artsgruppe").val(json.allearter[0].Artsgruppe)
@@ -164,7 +164,7 @@ $(document).ready(function() {
 	$("#taxon").typeahead({
 		items : 20,
 		source: function (query, process) {
-			var url='http://allearter-databasen.dk/api/?get=arter&type=lat&&query='+encodeURIComponent(query);
+			var url='https://allearter-databasen.dk/api/?get=arter&type=lat&&query='+encodeURIComponent(query);
 			return $.get(url, {}, function(data) {
 				lastLookup = data.allearter
 				return process(data.allearter.map(function(item) { return item.Videnskabeligt_navn }));
@@ -179,7 +179,7 @@ $(document).ready(function() {
 	$("#dknavn").typeahead({
 		items : 20,
 		source: function (query, process) {
-			var url='http://allearter-databasen.dk/api/?get=arter&type=dk&query='+encodeURIComponent(query);
+			var url='https://allearter-databasen.dk/api/?get=arter&type=dk&query='+encodeURIComponent(query);
 			return $.get(url, {}, function(data) {
 				lastLookup = data.allearter
 				return process(data.allearter.map(function(item) { return item.Dansk_navn }));
@@ -241,7 +241,7 @@ $(document).ready(function() {
 			return;
 		}
 		$.ajax({
-			url: 'http://allearter-databasen.dk/api/?get=art&query='+encodeURIComponent(taxon),
+			url: 'https://allearter-databasen.dk/api/?get=art&query='+encodeURIComponent(taxon),
 			success: function(json) {
 				if (json.allearter[0].Videnskabeligt_navn && json.allearter[0].Videnskabeligt_navn == taxon) {
 					window.document.getElementById('endeligt_bestemt').checked = true;
@@ -262,7 +262,7 @@ $(document).ready(function() {
 		}
 	}
 	$.ajax({
-		url: 'http://allearter-databasen.dk/api/?get=artsgrupper&query=',
+		url: 'https://allearter-databasen.dk/api/?get=artsgrupper&query=',
 		success: function(json) {
 			artsgrupper = json.allearter
 			var items = [], riger = [];
@@ -289,7 +289,6 @@ $(document).ready(function() {
 	//manual opslag
 	$.ajax({
 		dataType: "html",
-		//cache : false,
 		url : 'manual/indtastning.html?ver=2014',
 		success : function(html) {
 			$('[data-toggle="popover"]').each(function() {
@@ -299,8 +298,8 @@ $(document).ready(function() {
 				var content = div.find('#'+manual);
 				$(this).attr('data-content', content.html());
 				$(this).popover({
-					trigger: 'hover',
-					placement: 'left'
+					html: true,
+					trigger: 'hover'
 				});
 			});
 		}

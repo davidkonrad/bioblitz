@@ -147,16 +147,20 @@ var User = {
 		if (this.isEventAdmin() || this.isSuperUser()) return true;
 		return false;
 	},
+
 	isAnonUser : function() {
 		return (User.status == USER_ANON);
 	},
+
 	isEventUser : function() {
 		return (User.status == USER_EVENT);
 	},
+
 	isEventAdmin : function() {
+		//console.log(User.status, USER_ADMIN)
 		return (User.status == USER_ADMIN);
 	},
-
+	
 	isSuperUser : function() {
 		return (User.status == USER_SUPER);
 	}

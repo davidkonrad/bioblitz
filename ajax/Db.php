@@ -19,22 +19,21 @@ class Db {
 			$this->database = 'blitz';
 			$this->hostname = 'localhost';
 			$this->username = 'root';
-			$this->password = 'zoo'; 
+			$this->password = 'dadk'; 
 		} else {
 			$this->database = 'blitz';
 			$this->hostname = 'localhost';
 			$this->username = 'root';
-			$this->password = '3chol%0Ma';
+			$this->password = 'mguGQ&j"a?4\@;aW';
 		}
 
 		try {
-			$this->link=mysql_connect($this->hostname,
-						  $this->username,
-						  $this->password);
+			$this->link=mysql_connect($this->hostname, $this->username, $this->password);
 			if (!$this->link) {
 				die('Could not connect: ' . mysql_error());
 			} else {
 				mysql_select_db ($this->database);
+				mysql_set_charset('utf8');
 			}
 
 		} catch (Exception $e){
@@ -147,6 +146,15 @@ class Db {
 		fwrite($fh, $text."\n");
 		fclose($fh);
 	}
+
+	protected function isLocalhost() {
+		$host = $_SERVER["SERVER_ADDR"]; 
+		if (($host=='127.0.0.1') || ($host=='::1')) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 
 /* base class for AJAX and JSON */
@@ -154,6 +162,10 @@ class Base extends Db {
 	
 	public function __construct() {
 		parent::__construct();
+
+		if ($this->isLocalhost()) {
+			header('Access-Control-Allow-Origin	: *');
+		}
 	}
 
 	protected function getError() {
@@ -177,9 +189,6 @@ class Base extends Db {
 			$value = str_replace("\r", '', $value);
 			$value = str_replace("\t", '', $value);
 			$value = str_replace("\n", '', $value);
-			//19.05.2014
-			//$value = str_replace('""', '&quot;', $value);
-			//$value = str_replace('"', '&quot;', $value);
 			$value = str_replace('"', "'", $value);
 
 			if ($JSON!='') $JSON.=', ';
