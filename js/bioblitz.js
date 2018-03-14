@@ -311,6 +311,7 @@ var Blitz = {
 			dataType: 'json',
 			async : false,
 			success : function(json) {
+				var half = Math.abs(json.events.length / 2);
 				for (var i=0;i<json.events.length;i++) {
 					var event=json.events[i];
 					var href='index.html?event_id='+event.id;
@@ -318,6 +319,13 @@ var Blitz = {
 					var li='<li><a href="'+href+'" title="'+title+'">';
 					li+=event.titel+'</li>';
 					$("#event-dropdown").append(li);
+					/*
+					if (i<=half) {
+						$("#event-dropdown-1").append(li);
+					} else {
+						$("#event-dropdown-2").append(li);
+					}
+					*/
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {

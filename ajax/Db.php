@@ -164,7 +164,7 @@ class Base extends Db {
 		parent::__construct();
 
 		if ($this->isLocalhost()) {
-			header('Access-Control-Allow-Origin	: *');
+			header('Access-Control-Allow-Origin: *');
 		}
 	}
 

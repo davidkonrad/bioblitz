@@ -58,13 +58,19 @@ var Admin = {
 			dataType: 'json',
 			async : false,
 			success : function(json) {
-				$("#event-dropdown").empty();
+				$("#event-dropdown-1").empty();
+				$("#event-dropdown-2").empty();
+				var half = Math.abs(json.events.length / 2)-1; //!!
 				for (var i=0;i<json.events.length;i++) {
 					var event=json.events[i];
 					var title=event.dato_text+' - '+event.titel;
 					var li='<li><a href="#" onclick="Admin.editEvent('+event.id+');" title="'+title+'">';
 					li+=event.titel+'</li>';
-					$("#event-dropdown").append(li);
+					if (i<=half) {
+						$("#event-dropdown-1").append(li);
+					} else {
+						$("#event-dropdown-2").append(li);
+					}
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
