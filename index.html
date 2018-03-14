@@ -32,8 +32,10 @@ body {
 <script src="js/infobox.js"></script>
 <script src="js/keydragzoom.js"></script>
 <script src="js/jquery.cookie.js"></script>
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">google.load("visualization", "1", {packages:["corechart"]});</script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+	google.charts.load('45', {packages: ['corechart', 'table', 'bar']});
+</script>
 </head>
 <body>
    <div class="navbar navbar-inverse navbar-fixed-top">
@@ -54,14 +56,6 @@ body {
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bioblitz events <b class="caret"></b></a>
                 <ul class="dropdown-menu" id="event-dropdown">
-<!--
-									<div class="row-fluid" style="width: 400px;">
-										<ul class="unstyled span6" id="event-dropdown-1">
-										</ul>
-										<ul class="unstyled span6" id="event-dropdown-2">
-										</ul>
-									</div>
--->
                 </ul>
               </li>
 			  <li id="nav-admin" class="hidden"><a href="index.html">Rediger event</a></li>

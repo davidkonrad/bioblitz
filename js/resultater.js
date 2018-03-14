@@ -293,18 +293,18 @@ var Res = {
 		var options = {
 			title: 'Hold '+hold,
 			width: 440,
-	        height: 300,
+			height: 300,
 			pieSliceText: 'value',
 			pieSliceTextStyle: { fontSize: '22' },
 			colors : colors,
-			'chartArea': {left:-10,top:50,width:400,height:"100%"},
+			chartArea: {left:-10,top:50,width:400,height:"100%"},
 			backgroundColor: { stroke: "#ebebeb", strokeWidth: 1, fill: "#fff" }
 	    };
 	    var chart = new google.visualization.PieChart(document.getElementById(id));
 	    chart.draw(data, options)
 	},
 
-	chartHoldRiger : function(holdriger) {
+	chartHoldRiger : function(holdriger) {	
 		var data = new google.visualization.DataTable();
 		data.addColumn('string', 'Hold');
 		data.addColumn('number', 'Ej bedømt');

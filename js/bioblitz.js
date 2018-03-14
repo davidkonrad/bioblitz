@@ -250,7 +250,6 @@ var Blitz = {
 		//center of dk if not defined
 		lat = lat || 56.126627523318206;
 		long = long || 11.457741782069204;
-		//console.log(lat, long);
 		$("#lat").val(lat.toString().substring(0,10));
 		$("#long").val(long.toString().substring(0,10));
 	},
@@ -390,7 +389,6 @@ var Blitz = {
 			url : url,
 			dataType: 'json',
 			success : function(json) {
-				//console.log(json);
 				$("#taxon").val(json.taxon);
 				$("#dknavn").val(json.dknavn);
 				$("#finder_gruppe").val(json.finder_gruppe);
@@ -437,7 +435,6 @@ var Blitz = {
 			dataType : 'json',
 			cache : false,
 			success : function(json) {
-				//console.log(json);
 				$("#table-fund > tbody").empty();
 				for (var i=0;i<json.fund.length;i++) {
 					var fund=json.fund[i];
@@ -562,7 +559,6 @@ var Blitz = {
 			dataType: 'json',
 			cache : false,
 			success : function(json) {
-				//console.log(json);
 				var text=(json.taxon!=='') ? '<em>'+json.taxon+'</em>' : 'Ikke bedømt';
 				text+=(json.dknavn!='') ? ' / '+json.dknavn : '';
 
@@ -623,7 +619,6 @@ var Blitz = {
 			dataType: 'json',
 			cache : false,
 			success : function(json) {
-				//console.log(json);
 				$("#table-soeg > tbody").empty();
 				for (var i=0;i<json.soeg.length;i++) {
 					var soeg=json.soeg[i];
@@ -667,7 +662,16 @@ var Blitz = {
 
 	initStatistik : function() {
 		this.setSection(SECTION_STATISTIK);
-		Res.init();
+		/*
+			new hackish wait to ensure visualization is loaded
+			using callback would need huge changes to the entire structure of the app
+		*/
+		var wait = setInterval(function() {
+			if (google.visualization && google.visualization.BarChart) {
+				clearInterval(wait);
+				Res.init();
+			}
+		}, 100);
 	},
 
 	saveSearch : function() {
