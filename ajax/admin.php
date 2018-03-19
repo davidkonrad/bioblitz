@@ -97,7 +97,7 @@ class Admin extends Base {
 		event admins
 	**************************************************/
 	private function getAdmin() {
-		$SQL='select * from event_login where event_id='.$this->event_id.' and admin=1';
+		$SQL='select * from event_login where event_id='.$this->event_id.' and `admin`=1';
 		if (!$this->hasData($SQL)) {
 			$this->createAdmin();
 			$this->getAdmin();
@@ -108,7 +108,7 @@ class Admin extends Base {
 	}
 
 	private function createAdmin() {
-		$SQL='insert into event_login (event_id, brugernavn, password, admin) values('.
+		$SQL='insert into event_login (event_id, brugernavn, password, `admin`) values('.
 			$this->q($this->event_id).
 			$this->q('event'.$this->event_id).
 			$this->q($this->getPassword()).
@@ -128,14 +128,14 @@ class Admin extends Base {
 	}	
 		
 	private function getPassword() {
-	    $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
-	    $pass = array(); 
-	    $alphaLength = strlen($alphabet) - 1; 
-	    for ($i = 0; $i < 8; $i++) {
-	        $n = rand(0, $alphaLength);
-	        $pass[] = $alphabet[$n];
-	    }
-	    return implode($pass);
+    $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+    $pass = array(); 
+    $alphaLength = strlen($alphabet) - 1; 
+    for ($i = 0; $i < 8; $i++) {
+       $n = rand(0, $alphaLength);
+       $pass[] = $alphabet[$n];
+    }
+    return implode($pass);
 	}
 	
 }

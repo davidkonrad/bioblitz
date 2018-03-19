@@ -62,7 +62,7 @@ class Users extends Base {
 	private function getUsers() {
 		$id = (isset($_GET['event_id'])) ? $_GET['event_id'] : false;
 		if ($id) {
-			$SQL='select * from event_login where event_id='.$id.' and admin=0 order by id';
+			$SQL='select * from event_login where event_id='.$id.' and `admin`=0 order by id';
 			mysql_set_charset('utf8');
 			$result=$this->query($SQL);
 			$JSON='';

@@ -33,7 +33,8 @@ var Admin = {
 				Admin.populateUsers(event_id);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				//alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				console.log('editEvent', jqXHR, textStatus, errorThrown);
 			}
 		});
 		$.ajax({
@@ -47,7 +48,8 @@ var Admin = {
 				$('#event-adm-navn').animate({ scrollTop: 0 }, 0);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				//alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				console.log('get-admin', jqXHR, textStatus, errorThrown);
 			}
 		});
 	},
@@ -74,7 +76,8 @@ var Admin = {
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				//alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				console.log('populateEvents', jqXHR, textStatus, errorThrown);
 			}
 		});
 	},
@@ -89,7 +92,8 @@ var Admin = {
 					Admin.editEvent(event_id);
 				},
 				error: function(jqXHR, textStatus, errorThrown) {
-					alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+					//alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+					console.log('createEvent', jqXHR, textStatus, errorThrown);
 				}
 			});
 		}
@@ -124,7 +128,8 @@ var Admin = {
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				//alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				console.log('populateUsers', jqXHR, textStatus, errorThrown);
 			}
 		});
 	},
@@ -175,7 +180,8 @@ var Admin = {
 				Admin.populateUsers(event_id);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				//alert('error : '+jqXHR.responseText+' '+textStatus+' '+errorThrown);
+				console.log('createUser', jqXHR, textStatus, errorThrown);
 			}
 		});
 	},
